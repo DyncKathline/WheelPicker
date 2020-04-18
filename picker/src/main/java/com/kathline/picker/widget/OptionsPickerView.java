@@ -1,9 +1,10 @@
-package com.kathline.picker;
+package com.kathline.picker.widget;
 
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -140,7 +141,7 @@ public class OptionsPickerView<T> extends LinearLayout implements WheelView.OnIt
         if (data != null) {
             wheelView.setData(data);
         } else {
-            wheelView.setVisibility(GONE);
+            wheelView.setVisibility(View.GONE);
         }
     }
 
@@ -175,12 +176,12 @@ public class OptionsPickerView<T> extends LinearLayout implements WheelView.OnIt
         mOptionsData2 = linkageData2;
         if (linkageData3 == null) {
             mOptionsData3 = null;
-            mOptionsWv3.setVisibility(GONE);
+            mOptionsWv3.setVisibility(View.GONE);
             //两级联动
             mOptionsWv1.setData(linkageData1);
             mOptionsWv2.setData(linkageData2.get(0));
         } else {
-            mOptionsWv3.setVisibility(VISIBLE);
+            mOptionsWv3.setVisibility(View.VISIBLE);
             if (linkageData1.size() != linkageData3.size()) {
                 throw new IllegalArgumentException("linkageData1 and linkageData3 are not the same size.");
             }

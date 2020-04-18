@@ -1355,7 +1355,7 @@ public class WheelView<T> extends View implements Runnable {
      * @param textSize 字体大小
      */
     public void setTextSize(float textSize) {
-        setTextSize(textSize, false);
+        setTextSize(textSize, true);
     }
 
     /**
@@ -1595,7 +1595,7 @@ public class WheelView<T> extends View implements Runnable {
      * @param lineSpacing 行间距值
      */
     public void setLineSpacing(float lineSpacing) {
-        setLineSpacing(lineSpacing, false);
+        setLineSpacing(lineSpacing, true);
     }
 
     /**

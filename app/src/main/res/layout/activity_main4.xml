@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.kathline.picker.OptionsPickerView
+        <com.kathline.picker.widget.OptionsPickerView
             android:id="@+id/opv_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_dialog" />
 
-        <com.kathline.picker.OptionsPickerView
+        <com.kathline.picker.widget.OptionsPickerView
             android:id="@+id/opv_second"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/opv_first" />
 
-        <com.kathline.picker.OptionsPickerView
+        <com.kathline.picker.widget.OptionsPickerView
             android:id="@+id/opv_two_linkage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/opv_second" />
 
-        <com.kathline.picker.OptionsPickerView
+        <com.kathline.picker.widget.OptionsPickerView
             android:id="@+id/opv_three_linkage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

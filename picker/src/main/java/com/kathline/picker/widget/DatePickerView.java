@@ -1,4 +1,4 @@
-package com.kathline.picker;
+package com.kathline.picker.widget;
 
 import android.content.Context;
 import android.graphics.Typeface;

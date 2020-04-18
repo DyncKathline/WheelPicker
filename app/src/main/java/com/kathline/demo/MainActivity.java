@@ -1,6 +1,8 @@
 package com.kathline.demo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,10 @@ import androidx.appcompat.widget.SwitchCompat;
 
 import com.kathline.demo.entities.CityEntity;
 import com.kathline.demo.utils.ParseHelper;
+import com.kathline.demo.utils.ToastUtils;
+import com.kathline.picker.SinglePicker;
+import com.kathline.picker.listener.OnItemPickListener;
+import com.kathline.picker.listener.OnSingleWheelListener;
 import com.kathline.picker.widget.WheelView;
 
 import java.util.ArrayList;
@@ -25,6 +31,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private Context context;
 
     private AppCompatCheckBox mSmoothCb;
     private AppCompatSeekBar mDurationSb;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         AppCompatButton goCustomAttrsBtn = findViewById(R.id.btn_go_custom_attrs);
         goCustomAttrsBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Main4Activity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.btn_dialog_picker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                showSignPicker();
+                Intent intent = new Intent(MainActivity.this, DialogActivity.class);
                 startActivity(intent);
             }
         });
@@ -355,5 +371,47 @@ public class MainActivity extends AppCompatActivity {
         //解析城市列表
         List<CityEntity> cityData = ParseHelper.parseTwoLevelCityList(this);
         cityWv.setData(cityData);
+    }
+
+    public void showSignPicker() {
+        ArrayList<String> list = new ArrayList<>();
+        for(int i = 0;i<10; i++){
+            String s = "";
+            if(i<10){
+                s = "0"+i;
+            }else{
+                s = i+"";
+            }
+            list.add(s);
+        }
+//        String[] ss = (String[]) list.toArray();
+        SinglePicker<String> picker = new SinglePicker<>(this, list);
+        picker.setCanLoop(false);//不禁用循环
+        picker.setTopLineVisible(false);
+        picker.setTextSize(18);
+        picker.setLineSpacing(30);
+        picker.setSelectedIndex(2);
+        picker.setLabel("分");
+        picker.setOuterLabelEnable(true);
+        picker.setTitleText("得分");
+        picker.setItemWidth(100);
+        //启用权重 setWeightWidth 才起作用
+//        picker.setWeightEnable(true);
+//        picker.setWeightWidth(1);
+        picker.setSelectedTextColor(Color.GREEN);//前四位值是透明度
+        picker.setUnSelectedTextColor(Color.BLACK);
+        picker.setOnSingleWheelListener(new OnSingleWheelListener() {
+            @Override
+            public void onWheeled(int index, String item) {
+                ToastUtils.showShortToast(context, "index=" + index + ", item=" + item);
+            }
+        });
+        picker.setOnItemPickListener(new OnItemPickListener<String>() {
+            @Override
+            public void onItemPicked(int index, String item) {
+                ToastUtils.showShortToast(context, "index=" + index + ", item=" + item);
+            }
+        });
+        picker.show();
     }
 }

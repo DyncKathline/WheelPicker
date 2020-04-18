@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.kathline.picker.OptionsPickerView
+    <com.kathline.picker.widget.OptionsPickerView
         android:id="@+id/opv_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -46,6 +46,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_go_options_picker_view" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_dialog_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_go_custom_attrs"
+            android:text="弹窗选择器"/>
+
         <com.kathline.picker.widget.WheelView
             android:id="@+id/wheelview"
             android:layout_width="wrap_content"
@@ -54,7 +63,7 @@
             android:background="#f0f4c3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_go_custom_attrs"
+            app:layout_constraintTop_toBottomOf="@id/btn_dialog_picker"
             app:wv_dividerColor="#699f38"
             app:wv_normalItemTextColor="#00796b"
             app:wv_selectedItemTextColor="#004d40"

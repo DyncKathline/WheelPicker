@@ -17,7 +17,7 @@ import androidx.appcompat.widget.AppCompatSeekBar;
 
 import com.kathline.demo.entities.CityEntity;
 import com.kathline.demo.utils.ParseHelper;
-import com.kathline.picker.OptionsPickerView;
+import com.kathline.picker.widget.OptionsPickerView;
 import com.kathline.picker.listener.OnOptionsSelectedListener;
 
 import java.util.ArrayList;
