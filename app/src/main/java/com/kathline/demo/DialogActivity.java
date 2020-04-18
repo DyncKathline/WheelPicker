@@ -18,6 +18,7 @@ import com.kathline.picker.LinkagePicker;
 import com.kathline.picker.SinglePicker;
 import com.kathline.picker.TimePicker;
 import com.kathline.picker.listener.OnItemPickListener;
+import com.kathline.picker.listener.OnOptionsChangedListener;
 import com.kathline.picker.listener.OnOptionsSelectedListener;
 import com.kathline.picker.listener.OnSingleWheelListener;
 import com.kathline.picker.utils.DateUtils;
@@ -178,8 +179,7 @@ public class DialogActivity extends AppCompatActivity {
     public void onAddressPicker(View view) {
         LinkagePicker<CityEntity> picker = new LinkagePicker<>(this);
         picker.setCanLoop(false);
-//        picker.setHideProvince(hideProvince);
-//        picker.setHideCounty(hideCounty);
+//        picker.setShowStatus(new boolean[]{true, false, true});
 //        picker.setWeightEnable(true);
         picker.setGravity(Gravity.BOTTOM);
 //        if (hideCounty) {
@@ -191,7 +191,14 @@ public class DialogActivity extends AppCompatActivity {
             @Override
             public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data, int opt2Pos,
                                           @Nullable CityEntity opt2Data, int opt3Pos, @Nullable CityEntity opt3Data) {
-                ToastUtils.showShortToast(context, opt1Data.getWheelText() + "-" + opt2Data.getWheelText() + "-" + opt3Data.getWheelText());
+                ToastUtils.showShortToast(context, "submit: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
+            }
+        });
+        picker.setOnOptionsChangedListener(new OnOptionsChangedListener<CityEntity>() {
+            @Override
+            public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data, int opt2Pos,
+                                          @Nullable CityEntity opt2Data, int opt3Pos, @Nullable CityEntity opt3Data) {
+                ToastUtils.showShortToast(context, "changed: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
             }
         });
         picker.show();
@@ -199,7 +206,7 @@ public class DialogActivity extends AppCompatActivity {
         List<List<CityEntity>> c3List = new ArrayList<>(1);
         List<List<List<CityEntity>>> d3List = new ArrayList<>(1);
         ParseHelper.initThreeLevelCityList(context, p3List, c3List, d3List);
-        picker.setLinkageData(p3List, c3List, d3List);
+        picker.setLinkageData(p3List, c3List, null);
     }
 
     public void onNestView(View view) {

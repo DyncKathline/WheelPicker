@@ -12,6 +12,7 @@ import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Size;
 
+import com.kathline.picker.listener.OnOptionsChangedListener;
 import com.kathline.picker.listener.OnOptionsSelectedListener;
 import com.kathline.picker.listener.OnPickerScrollStateChangedListener;
 import com.kathline.picker.widget.WheelView;
@@ -42,6 +43,7 @@ public class LinkagePicker<T> extends WheelPicker {
     private boolean isLinkage;
     private boolean isResetSelectedPosition;
     protected OnOptionsSelectedListener<T> mOnOptionsSelectedListener;
+    protected OnOptionsChangedListener<T> mOnOptionsChangedListener;
     protected OnPickerScrollStateChangedListener mOnPickerScrollStateChangedListener;
     
     protected String firstLabel = "", secondLabel = "", thirdLabel = "";
@@ -50,8 +52,14 @@ public class LinkagePicker<T> extends WheelPicker {
     private float secondColumnWeight = 1;//第二级显示的宽度比
     private float thirdColumnWeight = 1;//第三级显示的宽度比
 
+    private boolean[] showStatus = new boolean[]{true, true, true};//对应三个WheelView显示隐藏
+
     public LinkagePicker(Activity activity) {
         super(activity);
+    }
+
+    public void setShowStatus(@Size(3) boolean[] status) {
+        this.showStatus = status;
     }
 
     /**
@@ -241,33 +249,22 @@ public class LinkagePicker<T> extends WheelPicker {
      * 三级联动默认每列宽度为屏幕宽度的三分之一，两级联动默认每列宽度为屏幕宽度的一半。
      */
     @Size(3)
-    protected int[] getColumnWidths(boolean onlyTwoColumn) {
+    protected int[] getColumnWidths() {
         int[] widths = new int[3];
-        // fixed: 17-1-7 Equality tests should not be made with floating point values.
-        if ((int) firstColumnWeight == 0 && (int) secondColumnWeight == 0
-                && (int) thirdColumnWeight == 0) {
-            if (onlyTwoColumn) {
-                widths[0] = screenWidthPixels / 2;
-                widths[1] = widths[0];
-                widths[2] = 0;
-            } else {
-                widths[0] = screenWidthPixels / 3;
-                widths[1] = widths[0];
-                widths[2] = widths[0];
-            }
-        }
-        else {
-            widths[0] = (int) (screenWidthPixels * firstColumnWeight);
-            widths[1] = (int) (screenWidthPixels * secondColumnWeight);
-            widths[2] = (int) (screenWidthPixels * thirdColumnWeight);
-        }
+        widths[0] = (int) (screenWidthPixels * firstColumnWeight);
+        widths[1] = (int) (screenWidthPixels * secondColumnWeight);
+        widths[2] = (int) (screenWidthPixels * thirdColumnWeight);
         return widths;
+    }
+
+    protected int setVisibility(boolean flag) {
+        return flag ? View.VISIBLE : View.GONE;
     }
 
     @NonNull
     @Override
     protected View makeCenterView() {
-        int[] widths = getColumnWidths(true);
+        int[] widths = getColumnWidths();
         LinearLayout layout = new LinearLayout(activity);
         layout.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
         layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -351,6 +348,10 @@ public class LinkagePicker<T> extends WheelPicker {
             }
         }
 
+        mOptionsWv1.setVisibility(setVisibility(showStatus[0]));
+        mOptionsWv2.setVisibility(setVisibility(showStatus[1]));
+        mOptionsWv3.setVisibility(setVisibility(showStatus[2]));
+
         mOptionsWv1.setOnItemSelectedListener(mOnItemSelectedListener);
         mOptionsWv2.setOnItemSelectedListener(mOnItemSelectedListener);
         mOptionsWv3.setOnItemSelectedListener(mOnItemSelectedListener);
@@ -405,7 +406,7 @@ public class LinkagePicker<T> extends WheelPicker {
                     }
                 }
 
-                if (mOnOptionsSelectedListener != null) {
+                if (mOnOptionsChangedListener != null) {
                     int opt1Pos = mOptionsWv1.getSelectedItemPosition();
                     int opt2Pos = mOptionsWv2.getSelectedItemPosition();
                     int opt3Pos = mOptionsData3 == null ? -1 : mOptionsWv3.getSelectedItemPosition();
@@ -415,12 +416,12 @@ public class LinkagePicker<T> extends WheelPicker {
                     if (mOptionsData3 != null) {
                         opt3Data = mOptionsData3.get(opt1Pos).get(opt2Pos).get(opt3Pos);
                     }
-                    mOnOptionsSelectedListener.onOptionsSelected(opt1Pos, opt1Data, opt2Pos, opt2Data, opt3Pos, opt3Data);
+                    mOnOptionsChangedListener.onOptionsSelected(opt1Pos, opt1Data, opt2Pos, opt2Data, opt3Pos, opt3Data);
                 }
 
             } else {
                 //不联动
-                if (mOnOptionsSelectedListener != null) {
+                if (mOnOptionsChangedListener != null) {
                     boolean isOpt1Shown = mOptionsWv1.getVisibility() == View.VISIBLE;
                     int opt1Pos = isOpt1Shown ? mOptionsWv1.getSelectedItemPosition() : -1;
                     boolean isOpt2Shown = mOptionsWv2.getVisibility() == View.VISIBLE;
@@ -430,7 +431,7 @@ public class LinkagePicker<T> extends WheelPicker {
                     T opt1Data = isOpt1Shown ? mOptionsWv1.getSelectedItemData() : null;
                     T opt2Data = isOpt2Shown ? mOptionsWv2.getSelectedItemData() : null;
                     T opt3Data = isOpt3Shown ? mOptionsWv3.getSelectedItemData() : null;
-                    mOnOptionsSelectedListener.onOptionsSelected(opt1Pos, opt1Data, opt2Pos, opt2Data, opt3Pos, opt3Data);
+                    mOnOptionsChangedListener.onOptionsSelected(opt1Pos, opt1Data, opt2Pos, opt2Data, opt3Pos, opt3Data);
                 }
             }
         }
@@ -450,9 +451,17 @@ public class LinkagePicker<T> extends WheelPicker {
      *
      * @param onOptionsSelectedListener 选项选中回调监听器
      */
-
     public void setOnOptionsSelectedListener(OnOptionsSelectedListener<T> onOptionsSelectedListener) {
         mOnOptionsSelectedListener = onOptionsSelectedListener;
+    }
+
+    /**
+     * 设置选项选中改变回调监听器
+     *
+     * @param onOptionsChangedListener 选项选中回调监听器
+     */
+    public void setOnOptionsChangedListener(OnOptionsChangedListener<T> onOptionsChangedListener) {
+        mOnOptionsChangedListener = onOptionsChangedListener;
     }
 
     /**
