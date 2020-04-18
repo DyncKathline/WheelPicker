@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <com.zyyoona7.picker.ex.YearWheelView
+    <com.kathline.picker.ex.YearWheelView
         android:id="@+id/wv_custom_year"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         app:wv_showDivider="true"
         app:wv_textSize="20sp" />
 
-    <com.zyyoona7.picker.ex.MonthWheelView
+    <com.kathline.picker.ex.MonthWheelView
         android:id="@+id/wv_custom_month"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

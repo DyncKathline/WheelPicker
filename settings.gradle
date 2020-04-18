@@ -1,1 +1,1 @@
-include ':app', ':wheelview', ':picker'
+include ':app', ':picker'
