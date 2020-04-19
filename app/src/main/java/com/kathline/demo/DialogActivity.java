@@ -25,6 +25,7 @@ import com.kathline.picker.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DialogActivity extends AppCompatActivity {
 
@@ -206,7 +207,7 @@ public class DialogActivity extends AppCompatActivity {
         List<List<CityEntity>> c3List = new ArrayList<>(1);
         List<List<List<CityEntity>>> d3List = new ArrayList<>(1);
         ParseHelper.initThreeLevelCityList(context, p3List, c3List, d3List);
-        picker.setLinkageData(p3List, c3List, null);
+        picker.setLinkageData(p3List, c3List, d3List);
     }
 
     public void onNestView(View view) {
@@ -228,14 +229,86 @@ public class DialogActivity extends AppCompatActivity {
     }
 
     public void onConstellationPicker(View view) {
+        boolean isChinese = Locale.getDefault().getDisplayLanguage().contains("中文");
+        SinglePicker<String> picker = new SinglePicker<>(this,
+                isChinese ? new String[]{
+                        "水瓶座", "双鱼座", "白羊", "金牛座", "双子座", "巨蟹座",
+                        "狮子座", "处女座", "天秤座", "天蝎座", "射手", "摩羯座"
+                } : new String[]{
+                        "Aquarius", "Pisces", "Aries", "Taurus", "Gemini", "Cancer",
+                        "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn"
+                });
+        picker.setCanLoop(false);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(50);
+        picker.setTopLineColor(0xFF33B5E5);
+        picker.setTopLineHeight(1);
+        picker.setTitleText(isChinese ? "请选择" : "Please pick");
+        picker.setTitleTextColor(0xFF999999);
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(0xFF33B5E5);
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(0xFF33B5E5);
+        picker.setSubmitTextSize(13);
+        picker.setSelectedTextColor(0xFFEE0000);
+        picker.setUnSelectedTextColor(0xFF999999);
+//        LineConfig config = new LineConfig();
+//        config.setColor(Color.BLUE);//线颜色
+//        config.setAlpha(120);//线透明度
+////        config.setRatio(1);//线比率
+//        picker.setLineConfig(config);
+        picker.setItemWidth(200);
+        picker.setBackgroundColor(0xFFE1E1E1);
+        picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
+        picker.setSelectedIndex(7);
+        picker.setOnSingleWheelListener(new OnSingleWheelListener() {
+            @Override
+            public void onWheeled(int index, String item) {
+                ToastUtils.showShortToast(context, "index=" + index + ", item=" + item);
+            }
+        });
+        picker.setOnItemPickListener(new OnItemPickListener<String>() {
+            @Override
+            public void onItemPicked(int index, String item) {
+                ToastUtils.showShortToast(context, "index=" + index + ", item=" + item);
+            }
+        });
+        picker.show();
     }
 
     public void onNumberPicker(View view) {
     }
 
-    public void onAddress2Picker(View view) {
-    }
-
     public void onAddress3Picker(View view) {
+        LinkagePicker<CityEntity> picker = new LinkagePicker<>(this);
+        picker.setCanLoop(false);
+        picker.setShowStatus(new boolean[]{true, true, false});
+//        picker.setWeightEnable(true);
+        picker.setGravity(Gravity.BOTTOM);
+//        if (hideCounty) {
+//            picker.setColumnWeight(1 / 3.0f, 2 / 3.0f);//将屏幕分为3份，省级和地级的比例为1:2
+//        } else {
+//            picker.setColumnWeight(2 / 8.0f, 3 / 8.0f, 3 / 8.0f);//省级、地级和县级的比例为2:3:3
+//        }
+        picker.setOnOptionsSelectedListener(new OnOptionsSelectedListener<CityEntity>() {
+            @Override
+            public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data, int opt2Pos,
+                                          @Nullable CityEntity opt2Data, int opt3Pos, @Nullable CityEntity opt3Data) {
+                ToastUtils.showShortToast(context, "submit: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
+            }
+        });
+        picker.setOnOptionsChangedListener(new OnOptionsChangedListener<CityEntity>() {
+            @Override
+            public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data, int opt2Pos,
+                                          @Nullable CityEntity opt2Data, int opt3Pos, @Nullable CityEntity opt3Data) {
+                ToastUtils.showShortToast(context, "changed: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
+            }
+        });
+        picker.show();
+        List<CityEntity> p3List = new ArrayList<>(1);
+        List<List<CityEntity>> c3List = new ArrayList<>(1);
+        List<List<List<CityEntity>>> d3List = new ArrayList<>(1);
+        ParseHelper.initThreeLevelCityList(context, p3List, c3List, d3List);
+        picker.setLinkageData(p3List, c3List, null);
     }
 }

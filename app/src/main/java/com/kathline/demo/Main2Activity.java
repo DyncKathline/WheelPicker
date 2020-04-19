@@ -3,12 +3,12 @@ package com.kathline.demo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.kathline.picker.widget.WheelView;
 
@@ -31,7 +31,7 @@ public class Main2Activity extends AppCompatActivity {
         }
         wheelView.setData(list);
 
-        final AppCompatButton showDataBtn=findViewById(R.id.btn_showSelectedData);
+        final Button showDataBtn=findViewById(R.id.btn_showSelectedData);
         showDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,9 +39,9 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-        AppCompatTextView textSizeTv=findViewById(R.id.tv_text_size);
+        TextView textSizeTv=findViewById(R.id.tv_text_size);
         textSizeTv.setText(getString(R.string.textSizeValue,wheelView.getTextSize()+""));
-        AppCompatTextView textAlignTv=findViewById(R.id.tv_text_align);
+        TextView textAlignTv=findViewById(R.id.tv_text_align);
         String textAlign="Center";
         if (wheelView.getTextAlign()== WheelView.TEXT_ALIGN_LEFT) {
             textAlign="Left";
@@ -49,41 +49,41 @@ public class Main2Activity extends AppCompatActivity {
             textAlign="right";
         }
         textAlignTv.setText(getString(R.string.textAlignValue,textAlign));
-        AppCompatTextView textBoundaryMarginTv=findViewById(R.id.tv_textBoundaryMargin);
+        TextView textBoundaryMarginTv=findViewById(R.id.tv_textBoundaryMargin);
         textBoundaryMarginTv.setText(getString(R.string.textBoundaryMarginValue,wheelView.getTextBoundaryMargin()+""));
-        AppCompatTextView normalItemTextColorTv=findViewById(R.id.tv_normalItemTextColor);
+        TextView normalItemTextColorTv=findViewById(R.id.tv_normalItemTextColor);
         normalItemTextColorTv.setText(getString(R.string.normalItemTextColorValue,"#"+Integer.toHexString(wheelView.getNormalItemTextColor()).toUpperCase()));
-        AppCompatTextView selectedItemTextColorTv=findViewById(R.id.tv_selectedItemTextColor);
+        TextView selectedItemTextColorTv=findViewById(R.id.tv_selectedItemTextColor);
         selectedItemTextColorTv.setText(getString(R.string.selectedItemTextColorValue,"#"+Integer.toHexString(wheelView.getSelectedItemTextColor()).toUpperCase()));
-        AppCompatTextView lineSpaceTv=findViewById(R.id.tv_lineSpace);
+        TextView lineSpaceTv=findViewById(R.id.tv_lineSpace);
         lineSpaceTv.setText(getString(R.string.lineSpaceValue,wheelView.getLineSpacing()+""));
-        AppCompatTextView integerNeedFormatTv=findViewById(R.id.tv_integerNeedFormat);
+        TextView integerNeedFormatTv=findViewById(R.id.tv_integerNeedFormat);
         integerNeedFormatTv.setText(getString(R.string.integerNeedFormatValue,wheelView.isIntegerNeedFormat()+""));
-        AppCompatTextView integerFormatTv=findViewById(R.id.tv_integerFormat);
+        TextView integerFormatTv=findViewById(R.id.tv_integerFormat);
         integerFormatTv.setText(getString(R.string.integerFormatValue,wheelView.getIntegerFormat()));
-        AppCompatTextView visibleItemsTv=findViewById(R.id.tv_visibleItems);
+        TextView visibleItemsTv=findViewById(R.id.tv_visibleItems);
         visibleItemsTv.setText(getString(R.string.visibleItemsValue,wheelView.getVisibleItems()+""));
-        final AppCompatTextView currentItemPositionTv=findViewById(R.id.tv_currentItemPosition);
+        final TextView currentItemPositionTv=findViewById(R.id.tv_currentItemPosition);
         currentItemPositionTv.setText(getString(R.string.currentItemPositionValue,wheelView.getSelectedItemPosition()+""));
-        final AppCompatTextView currentItemDataTv=findViewById(R.id.tv_currentItemData);
+        final TextView currentItemDataTv=findViewById(R.id.tv_currentItemData);
         currentItemDataTv.setText(getString(R.string.currentItemDataValue,wheelView.getSelectedItemData()+""));
-        AppCompatTextView showDividerTv=findViewById(R.id.tv_showDivider);
+        TextView showDividerTv=findViewById(R.id.tv_showDivider);
         showDividerTv.setText(getString(R.string.showDividerValue,wheelView.isShowDivider()+""));
-        AppCompatTextView dividerTypeTv=findViewById(R.id.tv_dividerType);
+        TextView dividerTypeTv=findViewById(R.id.tv_dividerType);
         String dividerType="fill";
         if (wheelView.getDividerType()== WheelView.DIVIDER_TYPE_WRAP) {
             dividerType="wrap";
         }
         dividerTypeTv.setText(getString(R.string.dividerTypeValue,dividerType));
-        AppCompatTextView dividerColorTv=findViewById(R.id.tv_dividerColor);
+        TextView dividerColorTv=findViewById(R.id.tv_dividerColor);
         dividerColorTv.setText(getString(R.string.dividerColorValue,"#"+Integer.toHexString(wheelView.getDividerColor()).toUpperCase()));
-        AppCompatTextView dividerHeightTv=findViewById(R.id.tv_dividerHeight);
+        TextView dividerHeightTv=findViewById(R.id.tv_dividerHeight);
         dividerHeightTv.setText(getString(R.string.dividerHeightValue,wheelView.getDividerHeight()+""));
-        AppCompatTextView dividerPaddingForWrapTv=findViewById(R.id.tv_dividerPaddingForWrap);
+        TextView dividerPaddingForWrapTv=findViewById(R.id.tv_dividerPaddingForWrap);
         dividerPaddingForWrapTv.setText(getString(R.string.dividerPaddingForWrapValue,wheelView.getDividerPaddingForWrap()+""));
-        AppCompatTextView curvedTv=findViewById(R.id.tv_curved);
+        TextView curvedTv=findViewById(R.id.tv_curved);
         curvedTv.setText(getString(R.string.curvedValue,wheelView.isCurved()+""));
-        AppCompatTextView curvedArcDirectionTv=findViewById(R.id.tv_curvedAlign);
+        TextView curvedArcDirectionTv=findViewById(R.id.tv_curvedAlign);
         String curvedArcDirection="Center";
         if (wheelView.getCurvedArcDirection()==WheelView.CURVED_ARC_DIRECTION_LEFT){
             curvedArcDirection="Left";
@@ -91,9 +91,9 @@ public class Main2Activity extends AppCompatActivity {
             curvedArcDirection="Right";
         }
         curvedArcDirectionTv.setText(getString(R.string.curvedArcDirectionValue,curvedArcDirection));
-        AppCompatTextView curvedArcDirectionBiasTv=findViewById(R.id.tv_curvedAlignBias);
+        TextView curvedArcDirectionBiasTv=findViewById(R.id.tv_curvedAlignBias);
         curvedArcDirectionBiasTv.setText(getString(R.string.curvedArcDirectionBiasValue,wheelView.getCurvedArcDirectionFactor()+""));
-        AppCompatTextView curvedRefractXTv=findViewById(R.id.tv_curvedRefractRatio);
+        TextView curvedRefractXTv=findViewById(R.id.tv_curvedRefractRatio);
         curvedRefractXTv.setText(getString(R.string.curvedRefractXValue,wheelView.getRefractRatio()+""));
 
         wheelView.setOnItemSelectedListener(new WheelView.OnItemSelectedListener<Integer>() {

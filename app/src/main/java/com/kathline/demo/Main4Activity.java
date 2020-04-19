@@ -6,14 +6,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatSeekBar;
 
 import com.kathline.demo.entities.CityEntity;
 import com.kathline.demo.utils.ParseHelper;
@@ -148,16 +147,16 @@ public class Main4Activity extends AppCompatActivity {
             }
         });
 
-        final AppCompatCheckBox smoothCb = findViewById(R.id.cb_smooth);
-        final AppCompatSeekBar smoothDurationSb = findViewById(R.id.sb_smooth_duration);
+        final CheckBox smoothCb = findViewById(R.id.cb_smooth);
+        final SeekBar smoothDurationSb = findViewById(R.id.sb_smooth_duration);
         smoothDurationSb.setMax(3000);
         smoothDurationSb.setProgress(250);
-        final AppCompatEditText opt1Et = findViewById(R.id.et_opt1);
-        AppCompatButton setOpt1Btn = findViewById(R.id.btn_set_opt1);
-        final AppCompatEditText opt2Et = findViewById(R.id.et_opt2);
-        AppCompatButton setOpt2Btn = findViewById(R.id.btn_set_opt2);
-        final AppCompatEditText opt3Et = findViewById(R.id.et_opt3);
-        AppCompatButton setOpt3Btn = findViewById(R.id.btn_set_opt3);
+        final EditText opt1Et = findViewById(R.id.et_opt1);
+        Button setOpt1Btn = findViewById(R.id.btn_set_opt1);
+        final EditText opt2Et = findViewById(R.id.et_opt2);
+        Button setOpt2Btn = findViewById(R.id.btn_set_opt2);
+        final EditText opt3Et = findViewById(R.id.et_opt3);
+        Button setOpt3Btn = findViewById(R.id.btn_set_opt3);
 
         setOpt1Btn.setOnClickListener(new View.OnClickListener() {
             @Override

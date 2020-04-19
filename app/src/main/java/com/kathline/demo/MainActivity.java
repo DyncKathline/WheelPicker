@@ -7,14 +7,14 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.appcompat.widget.AppCompatSeekBar;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.kathline.demo.entities.CityEntity;
 import com.kathline.demo.utils.ParseHelper;
@@ -33,27 +33,27 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private Context context;
 
-    private AppCompatCheckBox mSmoothCb;
-    private AppCompatSeekBar mDurationSb;
-    private AppCompatButton mScrollBtn;
+    private CheckBox mSmoothCb;
+    private SeekBar mDurationSb;
+    private Button mScrollBtn;
 
     private RadioGroup mAlignRg;
-    private AppCompatButton mSetAlignBtn;
+    private Button mSetAlignBtn;
 
-    private AppCompatButton mSetMarginBtn;
-    private AppCompatSeekBar mMarginSb;
+    private Button mSetMarginBtn;
+    private SeekBar mMarginSb;
 
-    private AppCompatButton mSetVisibleItemBtn;
-    private AppCompatSeekBar mVisibleItemSb;
+    private Button mSetVisibleItemBtn;
+    private SeekBar mVisibleItemSb;
 
-    private AppCompatSeekBar mLineSpacingSb;
-    private AppCompatButton mSetLineSpacingBtn;
+    private SeekBar mLineSpacingSb;
+    private Button mSetLineSpacingBtn;
 
-    private SwitchCompat mCurvedSc;
+    private Switch mCurvedSc;
     private RadioGroup mCurvedArcDirectionRg;
-    private AppCompatButton mSetCurvedArcDirectionBtn;
-    private AppCompatButton mSetCurvedFactorBtn;
-    private AppCompatSeekBar mCurvedFactorSb;
+    private Button mSetCurvedArcDirectionBtn;
+    private Button mSetCurvedFactorBtn;
+    private SeekBar mCurvedFactorSb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
 
-        AppCompatButton goCustomAttrsBtn = findViewById(R.id.btn_go_custom_attrs);
+        Button goCustomAttrsBtn = findViewById(R.id.btn_go_custom_attrs);
         goCustomAttrsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AppCompatButton goDatePickerBtn = findViewById(R.id.btn_go_date_picker_view);
+        Button goDatePickerBtn = findViewById(R.id.btn_go_date_picker_view);
         goDatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AppCompatButton goOptionsPickerBtn = findViewById(R.id.btn_go_options_picker_view);
+        Button goOptionsPickerBtn = findViewById(R.id.btn_go_options_picker_view);
         goOptionsPickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         //经过测试 OGG 格式比 MP3 效果好
         wheelView.setSoundEffectResource(R.raw.button_choose);
-        SwitchCompat soundSc = findViewById(R.id.sc_turn_on_sound);
+        Switch soundSc = findViewById(R.id.sc_turn_on_sound);
         soundSc.setChecked(wheelView.isSoundEffect());
         soundSc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
                 wheelView.setSoundEffect(isChecked);
             }
         });
-        final AppCompatSeekBar soundVolumeSb = findViewById(R.id.sb_sound_effect);
+        final SeekBar soundVolumeSb = findViewById(R.id.sb_sound_effect);
         soundVolumeSb.setMax(100);
         soundVolumeSb.setProgress((int) (wheelView.getPlayVolume() * 100));
-        AppCompatButton setSoundVolumeBtn = findViewById(R.id.btn_set_sound_effect);
+        Button setSoundVolumeBtn = findViewById(R.id.btn_set_sound_effect);
         setSoundVolumeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SwitchCompat cyclicSc = findViewById(R.id.sc_turn_on_cyclic);
+        Switch cyclicSc = findViewById(R.id.sc_turn_on_cyclic);
         cyclicSc.setChecked(wheelView.isCyclic());
         cyclicSc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -205,10 +205,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final AppCompatSeekBar textSizeSb = findViewById(R.id.sb_text_size);
+        final SeekBar textSizeSb = findViewById(R.id.sb_text_size);
         textSizeSb.setMax(100);
         textSizeSb.setProgress((int) wheelView.getTextSize());
-        final AppCompatButton setTextSizeBtn = findViewById(R.id.btn_set_text_size);
+        final Button setTextSizeBtn = findViewById(R.id.btn_set_text_size);
         setTextSizeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SwitchCompat dividerSc = findViewById(R.id.sc_turn_on_divider);
+        Switch dividerSc = findViewById(R.id.sc_turn_on_divider);
         dividerSc.setChecked(wheelView.isShowDivider());
         dividerSc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final RadioGroup typeRg = findViewById(R.id.rg_divider_type);
-        AppCompatButton setTypeBtn = findViewById(R.id.btn_set_divider_type);
+        Button setTypeBtn = findViewById(R.id.btn_set_divider_type);
         setTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -314,10 +314,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final AppCompatSeekBar heightSb = findViewById(R.id.sb_divider_height);
+        final SeekBar heightSb = findViewById(R.id.sb_divider_height);
         heightSb.setMax(20);
         heightSb.setProgress((int) wheelView.getDividerHeight());
-        AppCompatButton setHeightBtn = findViewById(R.id.btn_set_divider_height);
+        Button setHeightBtn = findViewById(R.id.btn_set_divider_height);
         setHeightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,10 +325,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final AppCompatSeekBar paddingSb = findViewById(R.id.sb_divider_padding);
+        final SeekBar paddingSb = findViewById(R.id.sb_divider_padding);
         paddingSb.setMax(100);
         paddingSb.setProgress((int) wheelView.getDividerPaddingForWrap());
-        AppCompatButton setPaddingBtn = findViewById(R.id.btn_set_divider_padding);
+        Button setPaddingBtn = findViewById(R.id.btn_set_divider_padding);
         setPaddingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,11 +336,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        AppCompatButton monoBtn = findViewById(R.id.btn_typeface_mono);
-        AppCompatButton mediumBtn = findViewById(R.id.btn_typeface_medium);
-        AppCompatButton regularBtn = findViewById(R.id.btn_typeface_regular);
-        AppCompatButton lightBtn = findViewById(R.id.btn_typeface_light);
-        final AppCompatCheckBox boldCb = findViewById(R.id.cb_is_bold);
+        Button monoBtn = findViewById(R.id.btn_typeface_mono);
+        Button mediumBtn = findViewById(R.id.btn_typeface_medium);
+        Button regularBtn = findViewById(R.id.btn_typeface_regular);
+        Button lightBtn = findViewById(R.id.btn_typeface_light);
+        final CheckBox boldCb = findViewById(R.id.cb_is_bold);
         monoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
