@@ -213,19 +213,58 @@ public class DialogActivity extends AppCompatActivity {
     public void onNestView(View view) {
     }
 
-    public void onAnimationStyle(View view) {
-    }
-
-    public void onAnimator(View view) {
-    }
-
     public void onDateRangePicker(View view) {
     }
 
     public void onYearMonthDayPicker(View view) {
+        final DatePicker picker = new DatePicker(this);
+        picker.setTopPadding(15);
+        picker.setRangeStart(2016, 8, 29);
+        picker.setRangeEnd(2111, 1, 11);
+        picker.setSelectedItem(2050, 10, 14);
+        picker.setWeightEnable(true);
+        picker.setTopLineColor(Color.BLACK);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+                ToastUtils.showLongToast(context, year + "-" + month + "-" + day);
+            }
+        });
+        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+            @Override
+            public void onYearWheeled(int index, String year) {
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onMonthWheeled(int index, String month) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onDayWheeled(int index, String day) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+            }
+        });
+        picker.show();
     }
 
     public void onYearMonthPicker(View view) {
+        DatePicker picker = new DatePicker(this, DatePicker.YEAR_MONTH);
+        picker.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+        picker.setWidth((int) (picker.getScreenWidthPixels() * 0.6));
+        picker.setRangeStart(2016, 10, 14);
+        picker.setRangeEnd(2020, 11, 11);
+        picker.setSelectedItem(2017, 9);
+        picker.setCanLinkage(true);
+        picker.setWeightEnable(true);
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthPickListener() {
+            @Override
+            public void onDatePicked(String year, String month) {
+                ToastUtils.showLongToast(context, year + "-" + month);
+            }
+        });
+        picker.show();
     }
 
     public void onConstellationPicker(View view) {
