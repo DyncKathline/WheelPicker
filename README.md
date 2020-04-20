@@ -69,7 +69,7 @@
 #### 1.依赖（dependency）
 
 ```groovy
-    implementation 'com.github.zyyoona7:wheelview:1.0.7'
+    implementation 'org.dync.kathline:picker:1.0.0'
 ```
 
 #### 2.基本用法（Basic Usage）
