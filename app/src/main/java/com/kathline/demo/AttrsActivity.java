@@ -15,14 +15,14 @@ import com.kathline.picker.widget.WheelView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main2Activity extends AppCompatActivity {
+public class AttrsActivity extends AppCompatActivity {
 
     private static final String TAG = "Main2Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_attrs);
 
         final WheelView<Integer> wheelView = findViewById(R.id.wheelview);
         List<Integer> list = new ArrayList<>(1);
@@ -35,7 +35,7 @@ public class Main2Activity extends AppCompatActivity {
         showDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Main2Activity.this,"选中的值为："+wheelView.getSelectedItemData(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(AttrsActivity.this,"选中的值为："+wheelView.getSelectedItemData(),Toast.LENGTH_SHORT).show();
             }
         });
 

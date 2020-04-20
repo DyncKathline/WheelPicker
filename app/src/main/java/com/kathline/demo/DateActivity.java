@@ -26,14 +26,14 @@ import com.kathline.picker.widget.WheelView;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Main3Activity extends AppCompatActivity {
+public class DateActivity extends AppCompatActivity {
 
     private static final String TAG = "Main3Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_date);
 
         YearWheelView yearWv = findViewById(R.id.wv_year);
         MonthWheelView monthWv = findViewById(R.id.wv_month);
@@ -91,7 +91,7 @@ public class Main3Activity extends AppCompatActivity {
         yearMonthDpv.setOnDateSelectedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(BaseDatePickerView datePickerView, int year, int month, int day, @Nullable Date date) {
-                Toast.makeText(Main3Activity.this, "选中：" + year + "-" + month, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DateActivity.this, "选中：" + year + "-" + month, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,7 +143,7 @@ public class Main3Activity extends AppCompatActivity {
             public void onDateSelected(BaseDatePickerView datePickerView, int year,
                                        int month, int day, @Nullable Date date) {
                 //                Toast.makeText(Main3Activity.this,"选中的日期："+date.toString(),Toast.LENGTH_SHORT).show();
-                Toast.makeText(Main3Activity.this, "选中的日期：" + year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DateActivity.this, "选中的日期：" + year + "-" + month + "-" + day, Toast.LENGTH_SHORT).show();
             }
         });
 

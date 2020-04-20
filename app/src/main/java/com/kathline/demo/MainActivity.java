@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         goCustomAttrsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this, AttrsActivity.class);
                 startActivity(intent);
 //                int width=getResources().getDisplayMetrics().widthPixels;
 //                float density=getResources().getDisplayMetrics().density;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         goDatePickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+                Intent intent = new Intent(MainActivity.this, DateActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         goOptionsPickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Main4Activity.class);
+                Intent intent = new Intent(MainActivity.this, OptionActivity.class);
                 startActivity(intent);
             }
         });

@@ -22,14 +22,14 @@ import com.kathline.picker.listener.OnOptionsSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main4Activity extends AppCompatActivity {
+public class OptionActivity extends AppCompatActivity {
 
     private static final String TAG = "Main4Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.activity_option);
 
         List<String> list1 = new ArrayList<>(1);
         List<String> list2 = new ArrayList<>(1);
@@ -198,7 +198,7 @@ public class Main4Activity extends AppCompatActivity {
                             public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data,
                                                           int opt2Pos, @Nullable CityEntity opt2Data,
                                                           int opt3Pos, @Nullable CityEntity opt3Data) {
-                                Toast.makeText(Main4Activity.this,
+                                Toast.makeText(OptionActivity.this,
                                         opt1Data.getWheelText()+","+opt2Data.getWheelText()+","+opt3Data.getWheelText(),
                                         Toast.LENGTH_SHORT).show();
                             }

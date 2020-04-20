@@ -17,9 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main2Activity" />
-        <activity android:name=".Main3Activity" />
-        <activity android:name=".Main4Activity" />
+        <activity android:name=".AttrsActivity" />
+        <activity android:name=".DateActivity" />
+        <activity android:name=".OptionActivity" />
     </application>
 
 </manifest>
