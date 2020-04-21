@@ -7,6 +7,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IntRange;
 
 import com.kathline.picker.base.ConfirmDialog;
+import com.kathline.picker.widget.WheelView;
 
 /**
  * 滑轮选择器
@@ -30,6 +31,8 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     protected boolean weightEnable = false;//启用权重
     protected boolean canLinkage = false;//是否联动
     protected float lineSpacing = 0;
+    protected boolean isShowDivider;
+    @WheelView.DividerType int dividerType;
     private View contentView;
 
     public WheelPicker(Activity activity) {
@@ -109,6 +112,24 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
      */
     public void setLineSpacing(float lineSpacing) {
         this.lineSpacing = lineSpacing;
+    }
+
+    /**
+     * 设置WheelView 是否显示分割线
+     *
+     * @param isShowDivider 是否显示分割线
+     */
+    public void setShowDivider(boolean isShowDivider) {
+        this.isShowDivider = isShowDivider;
+    }
+
+    /**
+     * 设置WheelView 分割线类型
+     *
+     * @param dividerType 分割线类型
+     */
+    public void setDividerType(@WheelView.DividerType int dividerType) {
+        this.dividerType = dividerType;
     }
 
     /**

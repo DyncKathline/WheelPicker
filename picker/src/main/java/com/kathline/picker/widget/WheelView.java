@@ -901,11 +901,11 @@ public class WheelView<T> extends View implements Runnable {
         } else if (item instanceof IWheelEntity) {
             return ((IWheelEntity) item).getWheelText();
         } else if (item instanceof Integer) {
+            return String.valueOf(item);
+        } else if (item instanceof String) {
             //如果为整形则最少保留两位数.
             return isIntegerNeedFormat ? String.format(Locale.getDefault(), mIntegerFormat, item)
-                    : String.valueOf(item);
-        } else if (item instanceof String) {
-            return (String) item;
+                    : (String) item;
         }
         return item.toString();
     }

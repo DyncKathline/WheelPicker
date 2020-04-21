@@ -28,18 +28,6 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onNestView"
-                android:text="布局选择器"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onDateRangePicker"
-                android:text="日期范围选择"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:onClick="onYearMonthDayPicker"
                 android:text="年月日选择"/>
 

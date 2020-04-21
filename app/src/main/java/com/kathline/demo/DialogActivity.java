@@ -22,6 +22,7 @@ import com.kathline.picker.listener.OnOptionsChangedListener;
 import com.kathline.picker.listener.OnOptionsSelectedListener;
 import com.kathline.picker.listener.OnSingleWheelListener;
 import com.kathline.picker.utils.DateUtils;
+import com.kathline.picker.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,11 +126,6 @@ public class DialogActivity extends AppCompatActivity {
         picker.setStepMinute(5);
         picker.setWeightEnable(true);
         picker.setCanceledOnTouchOutside(true);
-//        LineConfig config = new LineConfig();
-//        config.setColor(Color.BLUE);//线颜色
-//        config.setAlpha(120);//线透明度
-//        config.setVisible(true);//线不显示 默认显示
-//        picker.setLineConfig(config);
         picker.setOuterLabelEnable(true);
 //        picker.setLabel(null,null,null,null,null);
         picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
@@ -210,12 +206,6 @@ public class DialogActivity extends AppCompatActivity {
         picker.setLinkageData(p3List, c3List, d3List);
     }
 
-    public void onNestView(View view) {
-    }
-
-    public void onDateRangePicker(View view) {
-    }
-
     public void onYearMonthDayPicker(View view) {
         final DatePicker picker = new DatePicker(this);
         picker.setTopPadding(15);
@@ -224,6 +214,10 @@ public class DialogActivity extends AppCompatActivity {
         picker.setSelectedItem(2050, 10, 14);
         picker.setWeightEnable(true);
         picker.setTopLineColor(Color.BLACK);
+        picker.setLabel("", "", "", "", "");
+        picker.setIntegerNeedFormat("%s年", "%s月", "%s日", "%s时", "%s分");
+        picker.setShowDivider(true);
+        picker.setDividerType(WheelView.DIVIDER_TYPE_WRAP);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
@@ -291,11 +285,6 @@ public class DialogActivity extends AppCompatActivity {
         picker.setSubmitTextSize(13);
         picker.setSelectedTextColor(0xFFEE0000);
         picker.setUnSelectedTextColor(0xFF999999);
-//        LineConfig config = new LineConfig();
-//        config.setColor(Color.BLUE);//线颜色
-//        config.setAlpha(120);//线透明度
-////        config.setRatio(1);//线比率
-//        picker.setLineConfig(config);
         picker.setItemWidth(200);
         picker.setBackgroundColor(0xFFE1E1E1);
         picker.setSelectedItem(isChinese ? "处女座" : "Virgo");
