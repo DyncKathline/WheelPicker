@@ -295,7 +295,9 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv1.setTextSize(textSize);
         mOptionsWv1.setSelectedItemTextColor(textColorFocus);
         mOptionsWv1.setNormalItemTextColor(textColorNormal);
-//        mOptionsWv1.setLineConfig(lineConfig);
+        mOptionsWv1.setLineSpacing(lineSpacing);
+        mOptionsWv1.setSoundEffect(isSoundEffect);
+        mOptionsWv1.setPlayVolume(playVolume);
         mOptionsWv1.setLayoutParams(wheelParams);
         layout.addView(mOptionsWv1);
         if (!TextUtils.isEmpty(firstLabel)){
@@ -315,7 +317,9 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv2.setTextSize(textSize);
         mOptionsWv2.setSelectedItemTextColor(textColorFocus);
         mOptionsWv2.setNormalItemTextColor(textColorNormal);
-//        mOptionsWv2.setLineConfig(lineConfig);
+        mOptionsWv2.setLineSpacing(lineSpacing);
+        mOptionsWv2.setSoundEffect(isSoundEffect);
+        mOptionsWv2.setPlayVolume(playVolume);
         mOptionsWv2.setLayoutParams(wheelParams1);
         layout.addView(mOptionsWv2);
         if (!TextUtils.isEmpty(secondLabel)){
@@ -334,7 +338,9 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv3.setTextSize(textSize);
         mOptionsWv3.setSelectedItemTextColor(textColorFocus);
         mOptionsWv3.setNormalItemTextColor(textColorNormal);
-//            mOptionsWv3.setLineConfig(lineConfig);
+        mOptionsWv3.setLineSpacing(lineSpacing);
+        mOptionsWv3.setSoundEffect(isSoundEffect);
+        mOptionsWv3.setPlayVolume(playVolume);
         mOptionsWv3.setLayoutParams(wheelParams2);
         layout.addView(mOptionsWv3);
         if (!TextUtils.isEmpty(thirdLabel)){

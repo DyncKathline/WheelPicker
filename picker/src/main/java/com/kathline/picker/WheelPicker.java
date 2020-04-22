@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
 
 import com.kathline.picker.base.ConfirmDialog;
@@ -31,6 +32,9 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     protected boolean weightEnable = false;//启用权重
     protected boolean canLinkage = false;//是否联动
     protected float lineSpacing = 0;
+    //是否开启音频效果
+    protected boolean isSoundEffect = false;
+    protected @FloatRange(from = 0.0, to = 1.0) float playVolume;
     protected boolean isShowDivider;
     @WheelView.DividerType int dividerType;
     private View contentView;

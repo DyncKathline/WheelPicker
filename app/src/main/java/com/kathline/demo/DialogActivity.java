@@ -176,6 +176,7 @@ public class DialogActivity extends AppCompatActivity {
     public void onAddressPicker(View view) {
         LinkagePicker<CityEntity> picker = new LinkagePicker<>(this);
         picker.setCanLoop(false);
+        picker.setLineSpacing(30);
 //        picker.setShowStatus(new boolean[]{true, false, true});
 //        picker.setWeightEnable(true);
         picker.setGravity(Gravity.BOTTOM);

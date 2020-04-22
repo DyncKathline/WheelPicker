@@ -458,6 +458,9 @@ public class DateTimePicker extends WheelPicker {
             yearView.setSelectedItemTextColor(textColorFocus);
             yearView.setNormalItemTextColor(textColorNormal);
             yearView.setData(years);
+            yearView.setLineSpacing(lineSpacing);
+            yearView.setSoundEffect(isSoundEffect);
+            yearView.setPlayVolume(playVolume);
             yearView.setShowDivider(isShowDivider);
             yearView.setDividerType(dividerType);
             yearView.setSelectedItemPosition(selectedYearIndex);
@@ -508,6 +511,9 @@ public class DateTimePicker extends WheelPicker {
             monthView.setSelectedItemTextColor(textColorFocus);
             monthView.setNormalItemTextColor(textColorNormal);
             monthView.setData(months);
+            monthView.setLineSpacing(lineSpacing);
+            monthView.setSoundEffect(isSoundEffect);
+            monthView.setPlayVolume(playVolume);
             monthView.setShowDivider(isShowDivider);
             monthView.setDividerType(dividerType);
             monthView.setSelectedItemPosition(selectedMonthIndex);
@@ -559,6 +565,9 @@ public class DateTimePicker extends WheelPicker {
             dayView.setSelectedItemTextColor(textColorFocus);
             dayView.setNormalItemTextColor(textColorNormal);
             dayView.setData(days);
+            dayView.setLineSpacing(lineSpacing);
+            dayView.setSoundEffect(isSoundEffect);
+            dayView.setPlayVolume(playVolume);
             dayView.setShowDivider(isShowDivider);
             dayView.setDividerType(dividerType);
             dayView.setSelectedItemPosition(selectedDayIndex);
@@ -597,6 +606,9 @@ public class DateTimePicker extends WheelPicker {
             hourView.setSelectedItemTextColor(textColorFocus);
             hourView.setNormalItemTextColor(textColorNormal);
             hourView.setData(hours);
+            hourView.setLineSpacing(lineSpacing);
+            hourView.setSoundEffect(isSoundEffect);
+            hourView.setPlayVolume(playVolume);
             hourView.setShowDivider(isShowDivider);
             hourView.setDividerType(dividerType);
             hourView.setSelectedItemPosition(selectedHourIndex);
@@ -640,6 +652,9 @@ public class DateTimePicker extends WheelPicker {
             minuteView.setSelectedItemTextColor(textColorFocus);
             minuteView.setNormalItemTextColor(textColorNormal);
             minuteView.setData(minutes);
+            minuteView.setLineSpacing(lineSpacing);
+            minuteView.setSoundEffect(isSoundEffect);
+            minuteView.setPlayVolume(playVolume);
             minuteView.setShowDivider(isShowDivider);
             minuteView.setDividerType(dividerType);
             minuteView.setSelectedItemPosition(selectedMinuteIndex);
