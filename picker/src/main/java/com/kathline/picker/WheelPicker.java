@@ -121,6 +121,23 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     }
 
     /**
+     * 设置音效开关
+     *
+     * @param isSoundEffect 是否开启滚动音效
+     */
+    public void setSoundEffect(boolean isSoundEffect) {
+        this.isSoundEffect = isSoundEffect;
+    }
+    /**
+     * 设置播放音量
+     *
+     * @param playVolume 播放音量 range 0.0-1.0
+     */
+    public void setPlayVolume(@FloatRange(from = 0.0, to = 1.0) float playVolume) {
+        this.playVolume = playVolume;
+    }
+
+    /**
      * 设置WheelView 是否显示分割线
      *
      * @param isShowDivider 是否显示分割线
