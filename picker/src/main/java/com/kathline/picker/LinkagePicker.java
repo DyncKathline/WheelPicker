@@ -298,6 +298,7 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv1.setLineSpacing(lineSpacing);
         mOptionsWv1.setSoundEffect(isSoundEffect);
         mOptionsWv1.setPlayVolume(playVolume);
+        mOptionsWv1.setVisibleItems(mVisibleItems);
         mOptionsWv1.setLayoutParams(wheelParams);
         layout.addView(mOptionsWv1);
         if (!TextUtils.isEmpty(firstLabel)){
@@ -320,6 +321,7 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv2.setLineSpacing(lineSpacing);
         mOptionsWv2.setSoundEffect(isSoundEffect);
         mOptionsWv2.setPlayVolume(playVolume);
+        mOptionsWv2.setVisibleItems(mVisibleItems);
         mOptionsWv2.setLayoutParams(wheelParams1);
         layout.addView(mOptionsWv2);
         if (!TextUtils.isEmpty(secondLabel)){
@@ -341,6 +343,7 @@ public class LinkagePicker<T> extends WheelPicker {
         mOptionsWv3.setLineSpacing(lineSpacing);
         mOptionsWv3.setSoundEffect(isSoundEffect);
         mOptionsWv3.setPlayVolume(playVolume);
+        mOptionsWv3.setVisibleItems(mVisibleItems);
         mOptionsWv3.setLayoutParams(wheelParams2);
         layout.addView(mOptionsWv3);
         if (!TextUtils.isEmpty(thirdLabel)){

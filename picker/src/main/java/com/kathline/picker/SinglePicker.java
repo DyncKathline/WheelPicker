@@ -174,6 +174,7 @@ public class SinglePicker<T> extends WheelPicker {
         wheelView.setLineSpacing(lineSpacing);
         wheelView.setSoundEffect(isSoundEffect);
         wheelView.setPlayVolume(playVolume);
+        wheelView.setVisibleItems(mVisibleItems);
         wheelView.setSelectedItemTextColor(textColorFocus);
         wheelView.setNormalItemTextColor(textColorNormal);
         wheelView.setLayoutParams(wheelParams);

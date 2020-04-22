@@ -461,6 +461,7 @@ public class DateTimePicker extends WheelPicker {
             yearView.setLineSpacing(lineSpacing);
             yearView.setSoundEffect(isSoundEffect);
             yearView.setPlayVolume(playVolume);
+            yearView.setVisibleItems(mVisibleItems);
             yearView.setShowDivider(isShowDivider);
             yearView.setDividerType(dividerType);
             yearView.setSelectedItemPosition(selectedYearIndex);
@@ -514,6 +515,7 @@ public class DateTimePicker extends WheelPicker {
             monthView.setLineSpacing(lineSpacing);
             monthView.setSoundEffect(isSoundEffect);
             monthView.setPlayVolume(playVolume);
+            monthView.setVisibleItems(mVisibleItems);
             monthView.setShowDivider(isShowDivider);
             monthView.setDividerType(dividerType);
             monthView.setSelectedItemPosition(selectedMonthIndex);
@@ -568,6 +570,7 @@ public class DateTimePicker extends WheelPicker {
             dayView.setLineSpacing(lineSpacing);
             dayView.setSoundEffect(isSoundEffect);
             dayView.setPlayVolume(playVolume);
+            dayView.setVisibleItems(mVisibleItems);
             dayView.setShowDivider(isShowDivider);
             dayView.setDividerType(dividerType);
             dayView.setSelectedItemPosition(selectedDayIndex);
@@ -609,6 +612,7 @@ public class DateTimePicker extends WheelPicker {
             hourView.setLineSpacing(lineSpacing);
             hourView.setSoundEffect(isSoundEffect);
             hourView.setPlayVolume(playVolume);
+            hourView.setVisibleItems(mVisibleItems);
             hourView.setShowDivider(isShowDivider);
             hourView.setDividerType(dividerType);
             hourView.setSelectedItemPosition(selectedHourIndex);
@@ -655,6 +659,7 @@ public class DateTimePicker extends WheelPicker {
             minuteView.setLineSpacing(lineSpacing);
             minuteView.setSoundEffect(isSoundEffect);
             minuteView.setPlayVolume(playVolume);
+            minuteView.setVisibleItems(mVisibleItems);
             minuteView.setShowDivider(isShowDivider);
             minuteView.setDividerType(dividerType);
             minuteView.setSelectedItemPosition(selectedMinuteIndex);

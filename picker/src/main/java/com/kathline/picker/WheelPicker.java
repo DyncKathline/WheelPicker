@@ -34,7 +34,9 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     protected float lineSpacing = 0;
     //是否开启音频效果
     protected boolean isSoundEffect = false;
-    protected @FloatRange(from = 0.0, to = 1.0) float playVolume;
+    protected @FloatRange(from = 0.0, to = 1.0) float playVolume = 1.0f;
+    //可见的item条数
+    protected int mVisibleItems = 3;
     protected boolean isShowDivider;
     @WheelView.DividerType int dividerType;
     private View contentView;
