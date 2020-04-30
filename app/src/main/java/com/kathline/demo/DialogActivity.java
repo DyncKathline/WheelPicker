@@ -25,6 +25,7 @@ import com.kathline.picker.utils.DateUtils;
 import com.kathline.picker.widget.WheelView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,24 +115,35 @@ public class DialogActivity extends AppCompatActivity {
      * 年月日时间选择
      * */
     public void onYearMonthDayTimePicker(View view) {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);//当前年
+        int month = (cal.get(Calendar.MONTH))+1;//当前月
+        int day = cal.get(Calendar.DAY_OF_MONTH);//当前月的第几天：即当前日
+        int hour = cal.get(Calendar.HOUR_OF_DAY);//当前时：HOUR_OF_DAY-24小时制；HOUR-12小时制
+        int minute = cal.get(Calendar.MINUTE);//当前分
+        int second = cal.get(Calendar.SECOND);//当前秒
+
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
         picker.setActionButtonTop(false);
         picker.setDateRangeStart(2017, 1, 1);
         picker.setDateRangeEnd(2025, 11, 11);
-        picker.setSelectedItem(2018,6,16,0,0);
-        picker.setTimeRangeStart(9, 0);
-        picker.setTimeRangeEnd(20, 30);
+        picker.setSelectedItem(year,month,day,hour,minute, second);
+        picker.setTimeRangeStart(hour, 0, 0);
+        picker.setTimeRangeEnd(23, 59, 59);
         picker.setCanLinkage(false);
+        picker.setShowStatus(new boolean[]{false, false, true, true, true, true});
+        picker.setLabel("", "", "", "", "", "");
+        picker.setIntegerNeedFormat("%s年", "%s月", "%s日", "%s时", "%s分", "%s秒");
         picker.setTitleText("请选择");
         picker.setStepMinute(5);
         picker.setWeightEnable(true);
         picker.setCanceledOnTouchOutside(true);
         picker.setOuterLabelEnable(true);
-//        picker.setLabel(null,null,null,null,null);
+//        picker.setLabel(null,null,null,null,null,null);
         picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
             @Override
-            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                ToastUtils.showShortToast(context, year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute, String second) {
+                ToastUtils.showShortToast(context, year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
             }
         });
         picker.show();
@@ -139,8 +151,9 @@ public class DialogActivity extends AppCompatActivity {
 
     public void onTimePicker(View view) {
         TimePicker picker = new TimePicker(this, TimePicker.HOUR_24);
-        picker.setRangeStart(9, 0);//09:00
-        picker.setRangeEnd(18, 0);//18:30
+        picker.setCanLoop(false);
+        picker.setRangeStart(9, 0, 0);//09:00
+        picker.setRangeEnd(18, 0, 30);//18:30
         picker.setTopLineVisible(false);
         picker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
             @Override
@@ -216,8 +229,8 @@ public class DialogActivity extends AppCompatActivity {
         picker.setSelectedItem(2050, 10, 14);
         picker.setWeightEnable(true);
         picker.setTopLineColor(Color.BLACK);
-        picker.setLabel("", "", "", "", "");
-        picker.setIntegerNeedFormat("%s年", "%s月", "%s日", "%s时", "%s分");
+        picker.setLabel("", "", "", "", "", "");
+        picker.setIntegerNeedFormat("%s年", "%s月", "%s日", "%s时", "%s分", "%s秒");
         picker.setShowDivider(true);
         picker.setDividerType(WheelView.DIVIDER_TYPE_WRAP);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {

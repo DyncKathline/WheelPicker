@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.annotation.Size;
 
 import com.kathline.picker.utils.DateUtils;
 import com.kathline.picker.widget.WheelView;
@@ -61,21 +62,23 @@ public class DateTimePicker extends WheelPicker {
     private ArrayList<String> days = new ArrayList<>();
     private ArrayList<String> hours = new ArrayList<>();
     private ArrayList<String> minutes = new ArrayList<>();
+    private ArrayList<String> seconds = new ArrayList<>();
     private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
-    private String hourLabel = "时", minuteLabel = "分";
+    private String hourLabel = "时", minuteLabel = "分", secondLabel = "秒";
+    private boolean[] showStatus = new boolean[]{true, true, true, true, true, true};//对应六个WheelView显示隐藏
     //数据为Integer类型时，是否需要格式转换
     private boolean isIntegerNeedFormat;
-    private String yearFormat, monthFormat, dayFormat, hourFormat, minuteFormat;
-    private int selectedYearIndex = 0, selectedMonthIndex = 0, selectedDayIndex = 0, selectedHourIndex = 0, selectedMinuteIndex = 0;
-    private String selectedHour = "", selectedMinute = "";
+    private String yearFormat, monthFormat, dayFormat, hourFormat, minuteFormat, secondFormat;
+    private int selectedYearIndex = 0, selectedMonthIndex = 0, selectedDayIndex = 0, selectedHourIndex = 0, selectedMinuteIndex = 0, selectedSecondIndex = 0;
+    private String selectedHour = "", selectedMinute = "", selectedSecond = "";
     private OnWheelListener onWheelListener;
     private OnDateTimePickListener onDateTimePickListener;
     private int dateMode = YEAR_MONTH_DAY, timeMode = HOUR_24;
     private int startYear = 2010, startMonth = 1, startDay = 1;
     private int endYear = 2099, endMonth = 12, endDay = 31;
-    private int startHour, startMinute = 0;
-    private int endHour, endMinute = 59;
-    private int stepMinute = 1, stepHour = 1;//时间间隔
+    private int startHour, startMinute = 0, startSecond = 0;
+    private int endHour, endMinute = 59, endSecond = 59;
+    private int stepSecond = 1, stepMinute = 1, stepHour = 1;//时间间隔
 
     @IntDef(value = {NONE, YEAR_MONTH_DAY, YEAR_MONTH, MONTH_DAY})
     @Retention(RetentionPolicy.SOURCE)
@@ -186,6 +189,15 @@ public class DateTimePicker extends WheelPicker {
         }
     }
 
+    public void setStepSecond(int stepSecond) {
+        dealStepRange(stepSecond);
+        this.stepSecond = stepSecond;
+        seconds.clear();
+        if (timeMode != NONE) {
+            changeSecondData(DateUtils.trimZero(selectedMinute));
+        }
+    }
+
     public void setStepMinute(int stepMinute) {
         dealStepRange(stepMinute);
         this.stepMinute = stepMinute;
@@ -232,12 +244,12 @@ public class DateTimePicker extends WheelPicker {
     /**
      * 设置范围：开始的时分
      */
-    public void setTimeRangeStart(int startHour, int startMinute) {
+    public void setTimeRangeStart(int startHour, int startMinute, int startSecond) {
         if (timeMode == NONE) {
             throw new IllegalArgumentException("Time mode invalid");
         }
         boolean illegal = false;
-        if (startHour < 0 || startMinute < 0 || startMinute > 59) {
+        if (startHour < 0 || startMinute < 0 || startMinute > endMinute || startSecond > endSecond) {
             illegal = true;
         }
         if (timeMode == HOUR_12 && (startHour == 0 || startHour > 12)) {
@@ -251,17 +263,18 @@ public class DateTimePicker extends WheelPicker {
         }
         this.startHour = startHour;
         this.startMinute = startMinute;
+        this.startSecond = startSecond;
     }
 
     /**
      * 设置范围：结束的时分
      */
-    public void setTimeRangeEnd(int endHour, int endMinute) {
+    public void setTimeRangeEnd(int endHour, int endMinute, int endSecond) {
         if (timeMode == NONE) {
             throw new IllegalArgumentException("Time mode invalid");
         }
         boolean illegal = false;
-        if (endHour < 0 || endMinute < 0 || endMinute > 59) {
+        if (endHour < 0 || endMinute < 0 || endMinute > this.endMinute || endSecond > this.endSecond) {
             illegal = true;
         }
         if (timeMode == HOUR_12 && (endHour == 0 || endHour > 12)) {
@@ -275,18 +288,26 @@ public class DateTimePicker extends WheelPicker {
         }
         this.endHour = endHour;
         this.endMinute = endMinute;
+        this.endSecond = endSecond;
         initHourData();
+        changeMinuteData(DateUtils.trimZero(selectedHour));
+        changeSecondData(DateUtils.trimZero(selectedMinute));
+    }
+
+    public void setShowStatus(@Size(6) boolean[] status) {
+        this.showStatus = status;
     }
 
     /**
      * 设置年月日时分的显示单位
      */
-    public void setLabel(String yearLabel, String monthLabel, String dayLabel, String hourLabel, String minuteLabel) {
+    public void setLabel(String yearLabel, String monthLabel, String dayLabel, String hourLabel, String minuteLabel, String secondLabel) {
         this.yearLabel = yearLabel;
         this.monthLabel = monthLabel;
         this.dayLabel = dayLabel;
         this.hourLabel = hourLabel;
         this.minuteLabel = minuteLabel;
+        this.secondLabel = secondLabel;
     }
 
     /**
@@ -297,19 +318,20 @@ public class DateTimePicker extends WheelPicker {
      *                      <p>
      *                      如果有多个格式说明符会抛出 java.util.MissingFormatArgumentException: Format specifier '%s'(多出来的说明符)
      */
-    public void setIntegerNeedFormat(String yearFormat, String monthFormat, String dayFormat, String hourFormat, String minuteFormat) {
+    public void setIntegerNeedFormat(String yearFormat, String monthFormat, String dayFormat, String hourFormat, String minuteFormat, String secondFormat) {
         isIntegerNeedFormat = true;
         this.yearFormat = yearFormat;
         this.monthFormat = monthFormat;
         this.dayFormat = dayFormat;
         this.hourFormat = hourFormat;
         this.minuteFormat = minuteFormat;
+        this.secondFormat = secondFormat;
     }
 
     /**
      * 设置默认选中的年月日时分
      */
-    public void setSelectedItem(int year, int month, int day, int hour, int minute) {
+    public void setSelectedItem(int year, int month, int day, int hour, int minute, int second) {
         if (dateMode != YEAR_MONTH_DAY) {
             throw new IllegalArgumentException("Date mode invalid");
         }
@@ -328,6 +350,8 @@ public class DateTimePicker extends WheelPicker {
             selectedHourIndex = findItemIndex(hours, hour);
             changeMinuteData(hour);
             selectedMinuteIndex = findItemIndex(minutes, minute);
+            changeSecondData(minute);
+            selectedSecondIndex = findItemIndex(seconds, second);
         }
 
     }
@@ -335,7 +359,7 @@ public class DateTimePicker extends WheelPicker {
     /**
      * 设置默认选中的年月时分或者月日时分
      */
-    public void setSelectedItem(int yearOrMonth, int monthOrDay, int hour, int minute) {
+    public void setSelectedItem(int yearOrMonth, int monthOrDay, int hour, int minute, int second) {
         if (dateMode == YEAR_MONTH_DAY) {
             throw new IllegalArgumentException("Date mode invalid");
         }
@@ -409,6 +433,17 @@ public class DateTimePicker extends WheelPicker {
         return "";
     }
 
+    public String getSelectedSecond() {
+        if (timeMode != NONE) {
+            return selectedSecond;
+        }
+        return "";
+    }
+
+    protected int setVisibility(boolean flag) {
+        return flag ? View.VISIBLE : View.GONE;
+    }
+
     @NonNull
     @Override
     protected View makeCenterView() {
@@ -436,6 +471,9 @@ public class DateTimePicker extends WheelPicker {
         if (timeMode != NONE && minutes.size() == 0) {
             changeMinuteData(DateUtils.trimZero(selectedHour));
         }
+        if (timeMode != NONE && seconds.size() == 0) {
+            changeSecondData(DateUtils.trimZero(selectedMinute));
+        }
 
         LinearLayout layout = new LinearLayout(activity);
         layout.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
@@ -448,6 +486,15 @@ public class DateTimePicker extends WheelPicker {
         final WheelView<String> dayView = new WheelView<>(activity);
         final WheelView<String> hourView = new WheelView<>(activity);
         final WheelView<String> minuteView = new WheelView<>(activity);
+        final WheelView<String> secondView = new WheelView<>(activity);
+
+        yearView.setVisibility(setVisibility(showStatus[0]));
+        monthView.setVisibility(setVisibility(showStatus[1]));
+        dayView.setVisibility(setVisibility(showStatus[2]));
+        hourView.setVisibility(setVisibility(showStatus[3]));
+        minuteView.setVisibility(setVisibility(showStatus[4]));
+        secondView.setVisibility(setVisibility(showStatus[5]));
+
         if (dateMode == YEAR_MONTH_DAY || dateMode == YEAR_MONTH) {
             if(!TextUtils.isEmpty(yearFormat)) {
                 yearView.setIntegerNeedFormat(isIntegerNeedFormat);
@@ -686,7 +733,48 @@ public class DateTimePicker extends WheelPicker {
                     layout.addView(labelView);
                 }
             }
+            //秒
+            if(!TextUtils.isEmpty(secondFormat)) {
+                secondView.setIntegerNeedFormat(isIntegerNeedFormat);
+                secondView.setIntegerNeedFormat(secondFormat);
+            }
+            secondView.setCyclic(canLoop);
+            secondView.setTextSize(textSize);//must be called before setDateList
+            secondView.setSelectedItemTextColor(textColorFocus);
+            secondView.setNormalItemTextColor(textColorNormal);
+            secondView.setData(seconds);
+            secondView.setLineSpacing(lineSpacing);
+            secondView.setSoundEffect(isSoundEffect);
+            secondView.setPlayVolume(playVolume);
+            secondView.setVisibleItems(mVisibleItems);
+            secondView.setShowDivider(isShowDivider);
+            secondView.setDividerType(dividerType);
+            secondView.setSelectedItemPosition(selectedSecondIndex);
+            wheelViewParams.weight = 1.0f;
+            secondView.setLayoutParams(wheelViewParams);
+            layout.addView(secondView);
+            secondView.setOnItemSelectedListener(new WheelView.OnItemSelectedListener<String>() {
+                @Override
+                public void onItemSelected(WheelView<String> wheelView, String data, int position) {
+                    selectedSecondIndex = position;
+                    selectedSecond = data;
+                    if (onWheelListener != null) {
+                        onWheelListener.onSecondWheeled(position, data);
+                    }
+                }
+            });
+            if (!TextUtils.isEmpty(secondLabel)) {
+                if (isOuterLabelEnable()) {
+                    TextView labelView = new TextView(activity);
+                    labelView.setLayoutParams(labelViewParams);
+                    labelView.setTextColor(textColorFocus);
+                    labelView.setTextSize(textSize);
+                    labelView.setText(secondLabel);
+                    layout.addView(labelView);
+                }
+            }
         }
+
         return layout;
     }
 
@@ -700,9 +788,10 @@ public class DateTimePicker extends WheelPicker {
         String day = getSelectedDay();
         String hour = getSelectedHour();
         String minute = getSelectedMinute();
+        String second = getSelectedSecond();
         switch (dateMode) {
             case YEAR_MONTH_DAY:
-                ((OnYearMonthDayTimePickListener) onDateTimePickListener).onDateTimePicked(year, month, day, hour, minute);
+                ((OnYearMonthDayTimePickListener) onDateTimePickListener).onDateTimePicked(year, month, day, hour, minute, second);
                 break;
             case YEAR_MONTH:
                 ((OnYearMonthTimePickListener) onDateTimePickListener).onDateTimePicked(year, month, hour, minute);
@@ -814,6 +903,7 @@ public class DateTimePicker extends WheelPicker {
     }
 
     private void initHourData() {
+        hours.clear();
         for (int i = startHour; i <= endHour; i += stepHour) {
             String hour = DateUtils.fillZero(i);
             hours.add(hour);
@@ -835,7 +925,7 @@ public class DateTimePicker extends WheelPicker {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == startHour) {
-            for (int i = startMinute; i <= 59; i += stepMinute) {
+            for (int i = startMinute; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == endHour) {
@@ -843,13 +933,42 @@ public class DateTimePicker extends WheelPicker {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else {
-            for (int i = 0; i <= 59; i += stepMinute) {
+            for (int i = 0; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         }
         if (minutes.indexOf(selectedMinute) == -1) {
             //当前设置的分钟不在指定范围，则默认选中范围开始的分钟
             selectedMinute = minutes.get(0);
+        }
+    }
+
+    private void changeSecondData(int selectedMinute) {
+        if (startMinute == endMinute) {
+            if (startSecond > endSecond) {
+                int temp = startSecond;
+                startSecond = endSecond;
+                endSecond = temp;
+            }
+            for (int i = startSecond; i <= endSecond; i += stepSecond) {
+                seconds.add(DateUtils.fillZero(i));
+            }
+        } else if (selectedMinute == startMinute) {
+            for (int i = startSecond; i <= endSecond; i += stepSecond) {
+                seconds.add(DateUtils.fillZero(i));
+            }
+        } else if (selectedMinute == endMinute) {
+            for (int i = 0; i <= endSecond; i += stepSecond) {
+                seconds.add(DateUtils.fillZero(i));
+            }
+        } else {
+            for (int i = 0; i <= endSecond; i += stepMinute) {
+                seconds.add(DateUtils.fillZero(i));
+            }
+        }
+        if (seconds.indexOf(selectedSecond) == -1) {
+            //当前设置的分钟不在指定范围，则默认选中范围开始的分钟
+            selectedSecond = seconds.get(0);
         }
     }
 
@@ -865,6 +984,8 @@ public class DateTimePicker extends WheelPicker {
 
         void onMinuteWheeled(int index, String minute);
 
+        void onSecondWheeled(int index, String minute);
+
     }
 
     protected interface OnDateTimePickListener {
@@ -873,7 +994,7 @@ public class DateTimePicker extends WheelPicker {
 
     public interface OnYearMonthDayTimePickListener extends OnDateTimePickListener {
 
-        void onDateTimePicked(String year, String month, String day, String hour, String minute);
+        void onDateTimePicked(String year, String month, String day, String hour, String minute, String second);
 
     }
 

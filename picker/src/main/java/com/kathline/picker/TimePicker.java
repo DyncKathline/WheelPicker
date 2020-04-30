@@ -22,19 +22,19 @@ public class TimePicker extends DateTimePicker {
     }
 
     /**
-     * @deprecated use {@link #setLabel(String, String)} instead
+     * @deprecated use {@link #setLabel(String, String, String)} instead
      */
     @Deprecated
     @Override
-    public final void setLabel(String yearLabel, String monthLabel, String dayLabel, String hourLabel, String minuteLabel) {
-        super.setLabel(yearLabel, monthLabel, dayLabel, hourLabel, minuteLabel);
+    public final void setLabel(String yearLabel, String monthLabel, String dayLabel, String hourLabel, String minuteLabel, String secondLabel) {
+        super.setLabel(yearLabel, monthLabel, dayLabel, hourLabel, minuteLabel, secondLabel);
     }
 
     /**
      * 设置时间显示的单位
      */
-    public void setLabel(String hourLabel, String minuteLabel) {
-        super.setLabel("", "", "", hourLabel, minuteLabel);
+    public void setLabel(String hourLabel, String minuteLabel, String secondLabel) {
+        super.setLabel("", "", "", hourLabel, minuteLabel, secondLabel);
     }
 
     /**
@@ -74,21 +74,21 @@ public class TimePicker extends DateTimePicker {
     }
 
     /**
-     * @deprecated use {@link #setRangeStart(int, int)} instead
+     * @deprecated use {@link #setRangeStart(int, int, int)} instead
      */
     @Deprecated
     @Override
-    public void setTimeRangeStart(int startHour, int startMinute) {
-        super.setTimeRangeStart(startHour, startMinute);
+    public void setTimeRangeStart(int startHour, int startMinute, int startSecond) {
+        super.setTimeRangeStart(startHour, startMinute, startSecond);
     }
 
     /**
-     * @deprecated use {@link #setRangeEnd(int, int)} instead
+     * @deprecated use {@link #setRangeEnd(int, int, int)} instead
      */
     @Deprecated
     @Override
-    public void setTimeRangeEnd(int endHour, int endMinute) {
-        super.setTimeRangeEnd(endHour, endMinute);
+    public void setTimeRangeEnd(int endHour, int endMinute, int endSecond) {
+        super.setTimeRangeEnd(endHour, endMinute, endSecond);
     }
 
     /**
@@ -96,48 +96,48 @@ public class TimePicker extends DateTimePicker {
      */
     @Deprecated
     public void setRange(int startHour, int endHour) {
-        super.setTimeRangeStart(startHour, 0);
-        super.setTimeRangeEnd(endHour, 59);
+        super.setTimeRangeStart(startHour, 0, 0);
+        super.setTimeRangeEnd(endHour, 59, 59);
     }
 
 
     /**
      * 设置范围：开始的时分
      */
-    public void setRangeStart(int startHour, int startMinute) {
-        super.setTimeRangeStart(startHour, startMinute);
+    public void setRangeStart(int startHour, int startMinute, int startSecond) {
+        super.setTimeRangeStart(startHour, startMinute, startSecond);
     }
 
     /**
      * 设置范围：结束的时分
      */
-    public void setRangeEnd(int endHour, int endMinute) {
-        super.setTimeRangeEnd(endHour, endMinute);
+    public void setRangeEnd(int endHour, int endMinute, int endSecond) {
+        super.setTimeRangeEnd(endHour, endMinute, endSecond);
     }
 
     /**
-     * @deprecated use {@link #setSelectedItem(int, int)} instead
+     * @deprecated use {@link #setSelectedItem(int, int, int)} instead
      */
     @Deprecated
     @Override
-    public final void setSelectedItem(int year, int month, int day, int hour, int minute) {
-        super.setSelectedItem(year, month, day, hour, minute);
+    public final void setSelectedItem(int year, int month, int day, int hour, int minute, int second) {
+        super.setSelectedItem(year, month, day, hour, minute, second);
     }
 
     /**
-     * @deprecated use {@link #setSelectedItem(int, int)} instead
+     * @deprecated use {@link #setSelectedItem(int, int, int)} instead
      */
     @Deprecated
     @Override
-    public final void setSelectedItem(int yearOrMonth, int monthOrDay, int hour, int minute) {
-        super.setSelectedItem(yearOrMonth, monthOrDay, hour, minute);
+    public final void setSelectedItem(int yearOrMonth, int monthOrDay, int hour, int minute, int second) {
+        super.setSelectedItem(yearOrMonth, monthOrDay, hour, minute, second);
     }
 
     /**
      * 设置默认选中的时间
      */
-    public void setSelectedItem(int hour, int minute) {
-        super.setSelectedItem(0, 0, hour, minute);
+    public void setSelectedItem(int hour, int minute, int second) {
+        super.setSelectedItem(0, 0, hour, minute, second);
     }
 
     /**
@@ -178,6 +178,11 @@ public class TimePicker extends DateTimePicker {
             public void onMinuteWheeled(int index, String minute) {
                 listener.onMinuteWheeled(index, minute);
             }
+
+            @Override
+            public void onSecondWheeled(int index, String minute) {
+                listener.onSecondWheeled(index, minute);
+            }
         });
     }
 
@@ -213,6 +218,8 @@ public class TimePicker extends DateTimePicker {
         void onHourWheeled(int index, String hour);
 
         void onMinuteWheeled(int index, String minute);
+
+        void onSecondWheeled(int index, String minute);
 
     }
 

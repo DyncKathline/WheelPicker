@@ -26,7 +26,7 @@ public class DatePicker extends DateTimePicker {
      * 设置年月日的单位
      */
     public void setLabel(String yearLabel, String monthLabel, String dayLabel) {
-        super.setLabel(yearLabel, monthLabel, dayLabel, "", "");
+        super.setLabel(yearLabel, monthLabel, dayLabel, "", "", "");
     }
 
     /**
@@ -63,14 +63,14 @@ public class DatePicker extends DateTimePicker {
      * 设置默认选中的年月日
      */
     public void setSelectedItem(int year, int month, int day) {
-        super.setSelectedItem(year, month, day, 0, 0);
+        super.setSelectedItem(year, month, day, 0, 0, 0);
     }
 
     /**
      * 设置默认选中的年月或者月日
      */
     public void setSelectedItem(int yearOrMonth, int monthOrDay) {
-        super.setSelectedItem(yearOrMonth, monthOrDay, 0, 0);
+        super.setSelectedItem(yearOrMonth, monthOrDay, 0, 0, 0);
     }
 
 
@@ -103,6 +103,11 @@ public class DatePicker extends DateTimePicker {
             public void onMinuteWheeled(int index, String minute) {
 
             }
+
+            @Override
+            public void onSecondWheeled(int index, String minute) {
+
+            }
         });
     }
 
@@ -113,7 +118,7 @@ public class DatePicker extends DateTimePicker {
         if (listener instanceof OnYearMonthDayPickListener) {
             super.setOnDateTimePickListener(new OnYearMonthDayTimePickListener() {
                 @Override
-                public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                public void onDateTimePicked(String year, String month, String day, String hour, String minute, String second) {
                     ((OnYearMonthDayPickListener) listener).onDatePicked(year, month, day);
                 }
             });
