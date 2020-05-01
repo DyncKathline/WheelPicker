@@ -290,8 +290,12 @@ public class DateTimePicker extends WheelPicker {
         this.endMinute = endMinute;
         this.endSecond = endSecond;
         initHourData();
+
+        selectedHourIndex = findItemIndex(hours, DateUtils.trimZero(selectedHour));
         changeMinuteData(DateUtils.trimZero(selectedHour));
+        selectedMinuteIndex = findItemIndex(minutes, DateUtils.trimZero(selectedMinute));
         changeSecondData(DateUtils.trimZero(selectedMinute));
+        selectedSecondIndex = findItemIndex(seconds, DateUtils.trimZero(selectedSecond));
     }
 
     public void setShowStatus(@Size(6) boolean[] status) {
@@ -344,6 +348,7 @@ public class DateTimePicker extends WheelPicker {
         if (timeMode != NONE) {
             selectedHour = DateUtils.fillZero(hour);
             selectedMinute = DateUtils.fillZero(minute);
+            selectedSecond = DateUtils.fillZero(second);
             if (hours.size() == 0) {
                 initHourData();
             }
@@ -921,18 +926,22 @@ public class DateTimePicker extends WheelPicker {
                 startMinute = endMinute;
                 endMinute = temp;
             }
+            minutes.clear();
             for (int i = startMinute; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == startHour) {
+            minutes.clear();
             for (int i = startMinute; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else if (selectedHour == endHour) {
+            minutes.clear();
             for (int i = 0; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
         } else {
+            minutes.clear();
             for (int i = 0; i <= endMinute; i += stepMinute) {
                 minutes.add(DateUtils.fillZero(i));
             }
@@ -950,18 +959,22 @@ public class DateTimePicker extends WheelPicker {
                 startSecond = endSecond;
                 endSecond = temp;
             }
+            seconds.clear();
             for (int i = startSecond; i <= endSecond; i += stepSecond) {
                 seconds.add(DateUtils.fillZero(i));
             }
         } else if (selectedMinute == startMinute) {
+            seconds.clear();
             for (int i = startSecond; i <= endSecond; i += stepSecond) {
                 seconds.add(DateUtils.fillZero(i));
             }
         } else if (selectedMinute == endMinute) {
+            seconds.clear();
             for (int i = 0; i <= endSecond; i += stepSecond) {
                 seconds.add(DateUtils.fillZero(i));
             }
         } else {
+            seconds.clear();
             for (int i = 0; i <= endSecond; i += stepMinute) {
                 seconds.add(DateUtils.fillZero(i));
             }

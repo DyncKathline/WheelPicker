@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.kathline.demo.entities.CityEntity;
 import com.kathline.demo.utils.ParseHelper;
@@ -319,7 +321,51 @@ public class DialogActivity extends AppCompatActivity {
         picker.show();
     }
 
-    public void onNumberPicker(View view) {
+    public void onNumberPicker(View view) {}
+
+    public void onXMLPicker(View view) {
+        RelativeLayout rl_picker_time = findViewById(R.id.rl_picker_time);
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);//当前年
+        int month = (cal.get(Calendar.MONTH))+1;//当前月
+        int day = cal.get(Calendar.DAY_OF_MONTH);//当前月的第几天：即当前日
+        int hour = cal.get(Calendar.HOUR_OF_DAY);//当前时：HOUR_OF_DAY-24小时制；HOUR-12小时制
+        int minute = cal.get(Calendar.MINUTE);//当前分
+        int second = cal.get(Calendar.SECOND);//当前秒
+
+        final DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
+        picker.setDecorView(rl_picker_time);
+        picker.setShowActionBar(false);
+        picker.setActionButtonTop(false);
+        picker.setLineSpacing(30);
+        picker.setDateRangeStart(2017, 1, 1);
+        picker.setDateRangeEnd(2025, 11, 11);
+        picker.setSelectedItem(year,month,day,hour,minute, second);
+        picker.setTimeRangeStart(hour, 0, 0);
+        picker.setTimeRangeEnd(23, 59, 59);
+        picker.setCanLinkage(false);
+        picker.setShowStatus(new boolean[]{true, true, true, true, true, true});
+        picker.setLabel("", "", "", "", "", "");
+        picker.setIntegerNeedFormat("%s年", "%s月", "%s日", "%s时", "%s分", "%s秒");
+        picker.setTitleText("请选择");
+//        picker.setStepMinute(5);
+        picker.setWeightEnable(true);
+//        picker.setCanceledOnTouchOutside(true);
+        picker.setOuterLabelEnable(true);
+//        picker.setLabel(null,null,null,null,null,null);
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute, String second) {
+                ToastUtils.showShortToast(context, year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second);
+            }
+        });
+        picker.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                picker.getPickerData();
+            }
+        }, 2000);
     }
 
     public void onAddress3Picker(View view) {

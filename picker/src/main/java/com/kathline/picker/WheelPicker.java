@@ -165,4 +165,8 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
         }
         return contentView;
     }
+
+    public void getPickerData() {
+        onSubmit();
+    }
 }

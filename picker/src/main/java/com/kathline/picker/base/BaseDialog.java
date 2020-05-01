@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,12 +29,14 @@ import com.kathline.picker.utils.ScreenUtils;
  */
 public abstract class BaseDialog<V extends View> implements DialogInterface.OnKeyListener,
         DialogInterface.OnDismissListener {
+    private static final String TAG = BaseDialog.class.getSimpleName();
     public static final int MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT;
     protected Activity activity;
     protected int screenWidthPixels;
     protected int screenHeightPixels;
     private Dialog dialog;
+    private ViewGroup decorView = null;
     private FrameLayout contentLayout;
     private boolean isPrepared = false;
     private boolean outCancel = false;
@@ -43,7 +46,7 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
         DisplayMetrics metrics = ScreenUtils.displayMetrics(activity);
         screenWidthPixels = metrics.widthPixels;
         screenHeightPixels = metrics.heightPixels;
-        initDialog();
+//        initDialog();
     }
 
     private void initDialog() {
@@ -85,9 +88,13 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public void setCanceledOnTouchOutside(boolean canceled){
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         this.outCancel = canceled;
-            dialog.setCancelable(outCancel);
-            dialog.setCanceledOnTouchOutside(outCancel);
+        dialog.setCancelable(outCancel);
+        dialog.setCanceledOnTouchOutside(outCancel);
     }
 
     /**
@@ -125,6 +132,10 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
      * @see Gravity
      */
     public void setGravity(int gravity) {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         Window window = dialog.getWindow();
         if (window != null) {
             window.setGravity(gravity);
@@ -154,7 +165,15 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
         contentLayout.addView(view);
     }
 
+    public void setDecorView(ViewGroup decorView) {
+        this.decorView = decorView;
+    }
+
     public void setAnimationStyle(@StyleRes int animRes) {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         Window window = dialog.getWindow();
         if (window != null) {
             window.setWindowAnimations(animRes);
@@ -162,6 +181,10 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public void setOnDismissListener(final DialogInterface.OnDismissListener onDismissListener) {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
@@ -172,6 +195,10 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public void setOnKeyListener(final DialogInterface.OnKeyListener onKeyListener) {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -238,22 +265,41 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public boolean isShowing() {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return false;
+        }
         return dialog.isShowing();
     }
 
     public final void show() {
-        if (isPrepared) {
+        if(decorView == null) {
+            if (isPrepared) {
+                dialog.show();
+                showAfter();
+                return;
+            }
+            initDialog();
+            setContentViewBefore();
+            V view = makeContentView();
+            setContentView(view);// 设置弹出窗体的布局
+            setContentViewAfter(view);
+            isPrepared = true;
             dialog.show();
             showAfter();
-            return;
+        }else {
+            if(isPrepared) {
+                showAfter();
+                return;
+            }
+            setContentViewBefore();
+            V view = makeContentView();
+            decorView.removeAllViews();
+            decorView.addView(view);
+            setContentViewAfter(view);
+            isPrepared = true;
+            showAfter();
         }
-        setContentViewBefore();
-        V view = makeContentView();
-        setContentView(view);// 设置弹出窗体的布局
-        setContentViewAfter(view);
-        isPrepared = true;
-        dialog.show();
-        showAfter();
     }
 
     protected void showAfter() {
@@ -264,6 +310,10 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     protected final void dismissImmediately() {
+        if(dialog == null) {
+            Log.e(TAG, "current mode is not dialog");
+            return;
+        }
         dialog.dismiss();
     }
 
@@ -286,10 +336,16 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public Context getContext() {
+        if(decorView != null) {
+            return decorView.getContext();
+        }
         return dialog.getContext();
     }
 
     public Window getWindow() {
+        if(decorView != null) {
+            return null;
+        }
         return dialog.getWindow();
     }
 

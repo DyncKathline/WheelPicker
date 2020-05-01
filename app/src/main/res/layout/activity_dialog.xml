@@ -91,6 +91,18 @@
                 android:onClick="onAddress3Picker"
                 android:text="地址选择（只包括省级、地级）"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onXMLPicker"
+                android:text="xml picker"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_picker_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
         </LinearLayout>
 
     </ScrollView>

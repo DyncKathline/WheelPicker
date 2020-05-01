@@ -37,7 +37,12 @@ public abstract class ConfirmDialog<V extends View> extends BaseDialog<View> {
         isActionButtonTop = actionButtonTop;
     }
 
+    public void setShowActionBar(boolean isShowActionBar) {
+        this.isShowActionBar = isShowActionBar;
+    }
+
     protected boolean isActionButtonTop = true;//确认取消按钮位置
+    protected boolean isShowActionBar = true;//是否显示确认取消按钮
     protected CharSequence cancelText = "";
     protected CharSequence submitText = "";
     protected CharSequence titleText = "";
@@ -279,35 +284,39 @@ public abstract class ConfirmDialog<V extends View> extends BaseDialog<View> {
         rootLayout.setGravity(Gravity.CENTER);
         rootLayout.setPadding(0, 0, 0, 0);
         rootLayout.setClipToPadding(false);
-        if(isActionButtonTop){
-            View headerView = makeHeaderView();
-            if (headerView != null) {
-                rootLayout.addView(headerView);
-            }
-            if (topLineVisible) {
-                View lineView = new View(activity);
-                int height = ScreenUtils.dp2px(activity, topLineHeight);
-                lineView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, height));
-                lineView.setBackgroundColor(topLineColor);
-                rootLayout.addView(lineView);
+        if (isActionButtonTop) {
+            if(isShowActionBar) {
+                View headerView = makeHeaderView();
+                if (headerView != null) {
+                    rootLayout.addView(headerView);
+                }
+                if (topLineVisible) {
+                    View lineView = new View(activity);
+                    int height = ScreenUtils.dp2px(activity, topLineHeight);
+                    lineView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, height));
+                    lineView.setBackgroundColor(topLineColor);
+                    rootLayout.addView(lineView);
+                }
             }
             LinearLayout.LayoutParams rootParams = new LinearLayout.LayoutParams(MATCH_PARENT, 0, 1.0f);
-            rootParams.setMargins(0,15,0,15);
+            rootParams.setMargins(0, 15, 0, 15);
             rootLayout.addView(makeCenterView(), rootParams);
-        }else{
+        } else {
             LinearLayout.LayoutParams rootParams = new LinearLayout.LayoutParams(MATCH_PARENT, 0, 1.0f);
-            rootParams.setMargins(0,15,0,15);
+            rootParams.setMargins(0, 15, 0, 15);
             rootLayout.addView(makeCenterView(), rootParams);
-            if (topLineVisible) {
-                View lineView = new View(activity);
-                int height = ScreenUtils.dp2px(activity, topLineHeight);
-                lineView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, height));
-                lineView.setBackgroundColor(topLineColor);
-                rootLayout.addView(lineView);
-            }
-            View footerView = makeFooterView();
-            if (footerView != null) {
-                rootLayout.addView(footerView);
+            if(isShowActionBar) {
+                if (topLineVisible) {
+                    View lineView = new View(activity);
+                    int height = ScreenUtils.dp2px(activity, topLineHeight);
+                    lineView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, height));
+                    lineView.setBackgroundColor(topLineColor);
+                    rootLayout.addView(lineView);
+                }
+                View footerView = makeFooterView();
+                if (footerView != null) {
+                    rootLayout.addView(footerView);
+                }
             }
         }
         return rootLayout;
@@ -479,12 +488,14 @@ public abstract class ConfirmDialog<V extends View> extends BaseDialog<View> {
 
         return topButtonLayout;
     }
+
     /*
     * 点击确定按钮的回调
     * */
     protected void onSubmit() {
 
     }
+
     /*
     * 点击取消按钮的回调
     * */
