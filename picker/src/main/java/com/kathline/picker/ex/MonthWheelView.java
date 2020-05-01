@@ -8,7 +8,7 @@ import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 
 import com.kathline.picker.widget.WheelView;
-import com.zyyoona7.picker.R;
+import com.kathline.picker.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

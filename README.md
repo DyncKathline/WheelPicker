@@ -243,7 +243,7 @@ MainActivity WheelView 相关代码：
 
 在布局文件中：
 ```xml
-    <com.zyyoona7.picker.DatePickerView
+    <com.kathline.picker.DatePickerView
         android:id="@+id/dpv_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -297,7 +297,7 @@ MainActivity WheelView 相关代码：
 布局文件中：
 
 ```xml
-    <com.zyyoona7.picker.OptionsPickerView
+    <com.kathline.picker.OptionsPickerView
         android:id="@+id/opv_three_linkage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

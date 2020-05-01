@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 
-import com.zyyoona7.picker.R;
+import com.kathline.picker.R;
 import com.kathline.picker.widget.WheelView;
 
 import java.util.ArrayList;

@@ -3,6 +3,7 @@ package com.kathline.picker.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
@@ -12,7 +13,7 @@ import androidx.annotation.RawRes;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 
-import com.zyyoona7.picker.R;
+import com.kathline.picker.R;
 import com.kathline.picker.base.BaseDatePickerView;
 import com.kathline.picker.widget.WheelView;
 
@@ -25,9 +26,9 @@ import com.kathline.picker.widget.WheelView;
  */
 public class DatePickerView extends BaseDatePickerView {
 
-    private AppCompatTextView mYearTv;
-    private AppCompatTextView mMonthTv;
-    private AppCompatTextView mDayTv;
+    private TextView mYearTv;
+    private TextView mMonthTv;
+    private TextView mDayTv;
 
     public DatePickerView(Context context) {
         this(context, null);
@@ -186,7 +187,7 @@ public class DatePickerView extends BaseDatePickerView {
      * @param wheelView  WheelView
      * @param textView   labelView
      */
-    private void setItemVisibility(int visibility, WheelView wheelView, AppCompatTextView textView) {
+    private void setItemVisibility(int visibility, WheelView wheelView, TextView textView) {
         if (wheelView != null) {
             wheelView.setVisibility(visibility);
         }
@@ -682,7 +683,7 @@ public class DatePickerView extends BaseDatePickerView {
      *
      * @return 年份 TextView
      */
-    public AppCompatTextView getYearTv() {
+    public TextView getYearTv() {
         return mYearTv;
     }
 
@@ -691,7 +692,7 @@ public class DatePickerView extends BaseDatePickerView {
      *
      * @return 月份 TextView
      */
-    public AppCompatTextView getMonthTv() {
+    public TextView getMonthTv() {
         return mMonthTv;
     }
 
@@ -700,7 +701,7 @@ public class DatePickerView extends BaseDatePickerView {
      *
      * @return 日 TextView
      */
-    public AppCompatTextView getDayTv() {
+    public TextView getDayTv() {
         return mDayTv;
     }
 
