@@ -36,6 +36,8 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     protected int screenWidthPixels;
     protected int screenHeightPixels;
     private Dialog dialog;
+    private int width = WRAP_CONTENT;
+    private int height = WRAP_CONTENT;
     private ViewGroup decorView = null;
     private FrameLayout contentLayout;
     private boolean isPrepared = false;
@@ -68,15 +70,14 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
             window.setGravity(Gravity.CENTER);
 //            dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams params = window.getAttributes();
-            params.width = getScreenWidthPixels()- ScreenUtils.dp2px(activity, 10);
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            params.width = width;
+            params.height = height;
             window.setAttributes(params);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             //AndroidRuntimeException: requestFeature() must be called before adding content
             window.requestFeature(Window.FEATURE_NO_TITLE);
             window.setContentView(contentLayout);
         }
-        setSize(screenWidthPixels, WRAP_CONTENT);
     }
 
     public int getScreenWidthPixels() {
@@ -103,28 +104,6 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
      * @return the view
      */
     protected abstract V makeContentView();
-
-    /**
-     * 固定高度为屏幕的高
-     *
-     * @param fillScreen true为全屏
-     */
-    public void setFillScreen(boolean fillScreen) {
-        if (fillScreen) {
-            setSize(screenWidthPixels, (int) (screenHeightPixels * 0.85f));
-        }
-    }
-
-    /**
-     * 固定高度为屏幕的一半
-     *
-     * @param halfScreen true为半屏
-     */
-    public void setHalfScreen(boolean halfScreen) {
-        if (halfScreen) {
-            setSize(screenWidthPixels, screenHeightPixels / 2);
-        }
-    }
 
     /**
      * 位于屏幕何处
@@ -217,24 +196,22 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     public void setSize(int width, int height) {
         if (width == MATCH_PARENT) {
             //360奇酷等手机对话框MATCH_PARENT时两边还会有边距，故强制填充屏幕宽
-            width = screenWidthPixels;
+            this.width = screenWidthPixels;
+            this.height = height;
         }
         if (width == 0 && height == 0) {
-            width = screenWidthPixels;
-            height = WRAP_CONTENT;
+            this.width = WRAP_CONTENT;
+            this.height = WRAP_CONTENT;
         } else if (width == 0) {
-            width = screenWidthPixels;
+            this.width = WRAP_CONTENT;
+            this.height = height;
         } else if (height == 0) {
-            height = WRAP_CONTENT;
+            this.width = width;
+            this.height = WRAP_CONTENT;
+        }else {
+            this.width = width;
+            this.height = height;
         }
-        ViewGroup.LayoutParams params = contentLayout.getLayoutParams();
-        if (params == null) {
-            params = new ViewGroup.LayoutParams(width, height);
-        } else {
-            params.width = width;
-            params.height = height;
-        }
-        contentLayout.setLayoutParams(params);
     }
 
     /**
