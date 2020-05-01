@@ -805,7 +805,7 @@ public class DateTimePicker extends WheelPicker {
                 ((OnMonthDayTimePickListener) onDateTimePickListener).onDateTimePicked(month, day, hour, minute);
                 break;
             case NONE:
-                ((OnTimePickListener) onDateTimePickListener).onDateTimePicked(hour, minute);
+                ((OnTimePickListener) onDateTimePickListener).onDateTimePicked(hour, minute, second);
                 break;
         }
     }
@@ -1024,7 +1024,7 @@ public class DateTimePicker extends WheelPicker {
 
     public interface OnTimePickListener extends OnDateTimePickListener {
 
-        void onDateTimePicked(String hour, String minute);
+        void onDateTimePicked(String hour, String minute, String second);
     }
 
 }

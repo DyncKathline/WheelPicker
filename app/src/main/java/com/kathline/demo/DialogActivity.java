@@ -159,8 +159,8 @@ public class DialogActivity extends AppCompatActivity {
         picker.setTopLineVisible(false);
         picker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
             @Override
-            public void onTimePicked(String hour, String minute) {
-                ToastUtils.showShortToast(context, hour + ":" + minute);
+            public void onTimePicked(String hour, String minute, String second) {
+                ToastUtils.showShortToast(context, hour + ":" + minute + ":" + second);
             }
         });
         picker.show();

@@ -201,15 +201,15 @@ public class TimePicker extends DateTimePicker {
         }
         super.setOnDateTimePickListener(new DateTimePicker.OnTimePickListener() {
             @Override
-            public void onDateTimePicked(String hour, String minute) {
-                listener.onTimePicked(hour, minute);
+            public void onDateTimePicked(String hour, String minute, String second) {
+                listener.onTimePicked(hour, minute, second);
             }
         });
     }
 
     public interface OnTimePickListener {
 
-        void onTimePicked(String hour, String minute);
+        void onTimePicked(String hour, String minute, String second);
 
     }
 
