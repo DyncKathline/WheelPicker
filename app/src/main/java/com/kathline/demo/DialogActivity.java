@@ -62,6 +62,7 @@ public class DialogActivity extends AppCompatActivity {
         picker.setLineSpacing(30);
         picker.setSelectedIndex(2);
         picker.setLabel("分");
+        picker.setVisibleItems(7);
         picker.setOuterLabelEnable(true);
         picker.setTitleText("得分");
         picker.setItemWidth(100);
@@ -194,6 +195,7 @@ public class DialogActivity extends AppCompatActivity {
         picker.setCanLoop(false);
         picker.setLineSpacing(30);
         picker.setSoundEffect(true);
+        picker.setVisibleItems(5);
 //        picker.setShowStatus(new boolean[]{true, false, true});
 //        picker.setWeightEnable(true);
         picker.setGravity(Gravity.BOTTOM);

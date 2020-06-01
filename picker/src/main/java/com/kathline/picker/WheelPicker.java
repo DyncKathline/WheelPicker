@@ -20,11 +20,10 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     public static final float TEXT_ALPHA = 0.8f;
     public static final int TEXT_COLOR_FOCUS = 0XFF0288CE;
     public static final int TEXT_COLOR_NORMAL = 0XFFBBBBBB;
-    public static final int ITEM_OFF_SET = 2;
+    public static final int ITEM_OFF_SET = 3;
     protected int textSize = TEXT_SIZE;
     protected int textColorNormal = TEXT_COLOR_NORMAL;
     protected int textColorFocus = TEXT_COLOR_FOCUS;
-    protected int offset = ITEM_OFF_SET;
     //是否是自己布局添加的label   控制分割线是否连接到一起 成一条直线   false的时候 最好分割线是填充 LineConfig.DividerType.WRAP
     protected boolean outerLabelEnable = true;
     protected boolean canLoop = true;//是否循环
@@ -36,7 +35,7 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     protected boolean isSoundEffect = false;
     protected @FloatRange(from = 0.0, to = 1.0) float playVolume = 1.0f;
     //可见的item条数
-    protected int mVisibleItems = 3;
+    protected int mVisibleItems = ITEM_OFF_SET;
     protected boolean isShowDivider;
     @WheelView.DividerType int dividerType;
     private View contentView;
@@ -87,11 +86,10 @@ public abstract class WheelPicker extends ConfirmDialog<View> {
     }
 
     /**
-     * 设置选项偏移量，可用来要设置显示的条目数，范围为1-3。
-     * 1显示3条、2显示5条、3显示7条
+     * 设置选项偏移量，可用来要设置显示的条目数，范围为1-7。
      */
-    public void setOffset(@IntRange(from = 1, to = 3) int offset) {
-        this.offset = offset;
+    public void setVisibleItems(@IntRange(from = 1, to = 7) int offset) {
+        this.mVisibleItems = offset;
     }
 
     /**
