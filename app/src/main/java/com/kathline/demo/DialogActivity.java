@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.kathline.demo.entities.CityEntity;
@@ -155,7 +156,7 @@ public class DialogActivity extends AppCompatActivity {
         TimePicker picker = new TimePicker(this, TimePicker.HOUR_24);
         picker.setCanLoop(false);
         picker.setRangeStart(9, 0, 0);//09:00
-        picker.setRangeEnd(18, 0, 30);//18:30
+        picker.setRangeEnd(18, 1, 30);//18:30
         picker.setTopLineVisible(false);
         picker.setOnTimePickListener(new TimePicker.OnTimePickListener() {
             @Override
@@ -226,6 +227,8 @@ public class DialogActivity extends AppCompatActivity {
     public void onYearMonthDayPicker(View view) {
         final DatePicker picker = new DatePicker(this);
         picker.setTopPadding(15);
+        picker.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        picker.setDimAmount(0);
         picker.setRangeStart(2016, 8, 29);
         picker.setRangeEnd(2111, 1, 11);
         picker.setSelectedItem(2050, 10, 14);
@@ -263,7 +266,7 @@ public class DialogActivity extends AppCompatActivity {
     public void onYearMonthPicker(View view) {
         DatePicker picker = new DatePicker(this, DatePicker.YEAR_MONTH);
         picker.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        picker.setWidth((int) (picker.getScreenWidthPixels() * 0.6));
+        picker.setWidth(picker.getScreenWidthPixels());
         picker.setRangeStart(2016, 10, 14);
         picker.setRangeEnd(2020, 11, 11);
         picker.setSelectedItem(2017, 9);
@@ -371,6 +374,7 @@ public class DialogActivity extends AppCompatActivity {
     public void onAddress3Picker(View view) {
         LinkagePicker<CityEntity> picker = new LinkagePicker<>(this);
         picker.setCanLoop(false);
+        picker.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         picker.setShowStatus(new boolean[]{true, true, false});
 //        picker.setWeightEnable(true);
         picker.setGravity(Gravity.BOTTOM);

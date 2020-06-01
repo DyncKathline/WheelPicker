@@ -16,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import androidx.annotation.FloatRange;
 import androidx.annotation.StyleRes;
 
 import com.kathline.picker.utils.ScreenUtils;
@@ -36,6 +37,11 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     protected int screenWidthPixels;
     protected int screenHeightPixels;
     private Dialog dialog;
+    private int gravity = Gravity.CENTER;
+    private @StyleRes int animRes;
+    private float dimAmount = 0.5f;
+    private DialogInterface.OnDismissListener onDismissListener;
+    private DialogInterface.OnKeyListener onKeyListener;
     private int width = WRAP_CONTENT;
     private int height = WRAP_CONTENT;
     private ViewGroup decorView = null;
@@ -48,7 +54,6 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
         DisplayMetrics metrics = ScreenUtils.displayMetrics(activity);
         screenWidthPixels = metrics.widthPixels;
         screenHeightPixels = metrics.heightPixels;
-//        initDialog();
     }
 
     private void initDialog() {
@@ -58,25 +63,49 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
         contentLayout.setFocusableInTouchMode(true);
         //contentLayout.setFitsSystemWindows(true);
         dialog = new Dialog(activity);
-        setCanceledOnTouchOutside(outCancel);
-//        dialog.setCanceledOnTouchOutside(outCancel);//触摸屏幕取消窗体
-//        dialog.setCancelable(outCancel);//按返回键取消窗体
+        dialog.setCancelable(outCancel);//按返回键取消窗体
+        dialog.setCanceledOnTouchOutside(outCancel);//触摸屏幕取消窗体
         dialog.setOnKeyListener(this);
         dialog.setOnDismissListener(this);
         Window window = dialog.getWindow();
         if (window != null) {
-//            window.setGravity(Gravity.BOTTOM);
-            ////解决宽度问题
-            window.setGravity(Gravity.CENTER);
-//            dialogWindow.getDecorView().setPadding(0, 0, 0, 0);
-            WindowManager.LayoutParams params = window.getAttributes();
-            params.width = width;
-            params.height = height;
-            window.setAttributes(params);
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             //AndroidRuntimeException: requestFeature() must be called before adding content
             window.requestFeature(Window.FEATURE_NO_TITLE);
             window.setContentView(contentLayout);
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = width;
+            params.height = height;
+            if (dimAmount < 0f || dimAmount > 1f) {
+                throw new RuntimeException("透明度必须在0~1之间");
+            } else {
+                params.dimAmount = dimAmount;
+            }
+            window.setAttributes(params);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            window.getDecorView().setPadding(0, 0, 0, 0);
+
+            window.setGravity(gravity);
+            if(animRes != 0) {
+                window.setWindowAnimations(animRes);
+            }
+            if(onDismissListener != null) {
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        BaseDialog.this.onDismiss(dialogInterface);
+                        onDismissListener.onDismiss(dialogInterface);
+                    }
+                });
+            }
+            if(onKeyListener != null) {
+                dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        BaseDialog.this.onKey(dialog, keyCode, event);
+                        return onKeyListener.onKey(dialog, keyCode, event);
+                    }
+                });
+            }
         }
     }
 
@@ -89,13 +118,7 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public void setCanceledOnTouchOutside(boolean canceled){
-        if(dialog == null) {
-            Log.e(TAG, "current mode is not dialog");
-            return;
-        }
         this.outCancel = canceled;
-        dialog.setCancelable(outCancel);
-        dialog.setCanceledOnTouchOutside(outCancel);
     }
 
     /**
@@ -111,18 +134,7 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
      * @see Gravity
      */
     public void setGravity(int gravity) {
-        if(dialog == null) {
-            Log.e(TAG, "current mode is not dialog");
-            return;
-        }
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setGravity(gravity);
-        }
-        if (gravity == Gravity.CENTER) {
-            //居于屏幕正中间时，宽度不允许填充屏幕
-            setWidth((int) (screenWidthPixels * 0.9f));
-        }
+        this.gravity = gravity;
     }
 
     /**
@@ -149,42 +161,25 @@ public abstract class BaseDialog<V extends View> implements DialogInterface.OnKe
     }
 
     public void setAnimationStyle(@StyleRes int animRes) {
-        if(dialog == null) {
-            Log.e(TAG, "current mode is not dialog");
-            return;
-        }
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setWindowAnimations(animRes);
-        }
+        this.animRes = animRes;
+    }
+
+    /**
+     * 设置Dialog之外的背景透明度，0~1之间，默认值 0.5f，半透明，越小也透明
+     *
+     * @param dimAmount
+     * @return
+     */
+    public void setDimAmount(@FloatRange(from = 0, to = 1.0) float dimAmount) {
+        this.dimAmount = dimAmount;
     }
 
     public void setOnDismissListener(final DialogInterface.OnDismissListener onDismissListener) {
-        if(dialog == null) {
-            Log.e(TAG, "current mode is not dialog");
-            return;
-        }
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                BaseDialog.this.onDismiss(dialogInterface);
-                onDismissListener.onDismiss(dialogInterface);
-            }
-        });
+        this.onDismissListener = onDismissListener;
     }
 
     public void setOnKeyListener(final DialogInterface.OnKeyListener onKeyListener) {
-        if(dialog == null) {
-            Log.e(TAG, "current mode is not dialog");
-            return;
-        }
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                                BaseDialog.this.onKey(dialog, keyCode, event);
-                                return onKeyListener.onKey(dialog, keyCode, event);
-                            }
-         });
+        this.onKeyListener = onKeyListener;
     }
 
     /**

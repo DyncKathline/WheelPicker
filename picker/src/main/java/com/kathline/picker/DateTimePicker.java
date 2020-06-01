@@ -65,6 +65,7 @@ public class DateTimePicker extends WheelPicker {
     private ArrayList<String> seconds = new ArrayList<>();
     private String yearLabel = "年", monthLabel = "月", dayLabel = "日";
     private String hourLabel = "时", minuteLabel = "分", secondLabel = "秒";
+    private int rightMargin = 30;
     private boolean[] showStatus = new boolean[]{true, true, true, true, true, true};//对应六个WheelView显示隐藏
     //数据为Integer类型时，是否需要格式转换
     private boolean isIntegerNeedFormat;
@@ -332,6 +333,10 @@ public class DateTimePicker extends WheelPicker {
         this.secondFormat = secondFormat;
     }
 
+    public void setLabelRightMargin(int margin) {
+        this.rightMargin = margin;
+    }
+
     /**
      * 设置默认选中的年月日时分
      */
@@ -545,6 +550,7 @@ public class DateTimePicker extends WheelPicker {
             if (!TextUtils.isEmpty(yearLabel)) {
                 if (isOuterLabelEnable()) {
                     TextView labelView = new TextView(activity);
+                    labelViewParams.rightMargin = rightMargin;
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
                     labelView.setTextSize(textSize);
@@ -601,6 +607,7 @@ public class DateTimePicker extends WheelPicker {
             if (!TextUtils.isEmpty(monthLabel)) {
                 if (isOuterLabelEnable()) {
                     TextView labelView = new TextView(activity);
+                    labelViewParams.rightMargin = rightMargin;
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
                     labelView.setTextSize(textSize);
@@ -641,6 +648,7 @@ public class DateTimePicker extends WheelPicker {
             if (!TextUtils.isEmpty(dayLabel)) {
                 if (isOuterLabelEnable()) {
                     TextView labelView = new TextView(activity);
+                    labelViewParams.rightMargin = rightMargin;
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
                     labelView.setTextSize(textSize);
@@ -691,6 +699,7 @@ public class DateTimePicker extends WheelPicker {
             if (!TextUtils.isEmpty(hourLabel)) {
                 if (isOuterLabelEnable()) {
                     TextView labelView = new TextView(activity);
+                    labelViewParams.rightMargin = rightMargin;
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
                     labelView.setTextSize(textSize);
@@ -771,6 +780,7 @@ public class DateTimePicker extends WheelPicker {
             if (!TextUtils.isEmpty(secondLabel)) {
                 if (isOuterLabelEnable()) {
                     TextView labelView = new TextView(activity);
+                    labelViewParams.rightMargin = rightMargin;
                     labelView.setLayoutParams(labelViewParams);
                     labelView.setTextColor(textColorFocus);
                     labelView.setTextSize(textSize);
