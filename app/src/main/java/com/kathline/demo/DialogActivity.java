@@ -215,7 +215,7 @@ public class DialogActivity extends AppCompatActivity {
             @Override
             public void onOptionsSelected(int opt1Pos, @Nullable CityEntity opt1Data, int opt2Pos,
                                           @Nullable CityEntity opt2Data, int opt3Pos, @Nullable CityEntity opt3Data) {
-                ToastUtils.showShortToast(context, "changed: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
+//                ToastUtils.showShortToast(context, "changed: " + (opt1Data != null ? opt1Data.getWheelText() : "null") + "-" + (opt2Data != null ? opt2Data.getWheelText() : "null") + "-" + (opt3Data != null ? opt3Data.getWheelText() : "null"));
             }
         });
         picker.show();

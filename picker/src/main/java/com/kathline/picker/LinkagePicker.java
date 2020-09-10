@@ -636,8 +636,9 @@ public class LinkagePicker<T> extends WheelPicker {
     public T getOpt3SelectedData() {
         if (isLinkage) {
             return mOptionsData3 == null ? null : mOptionsData3.get(mOptionsWv1.getSelectedItemPosition())
+                    .get(mOptionsWv2.getSelectedItemPosition()).size() > 0 ? mOptionsData3.get(mOptionsWv1.getSelectedItemPosition())
                     .get(mOptionsWv2.getSelectedItemPosition())
-                    .get(mOptionsWv3.getSelectedItemPosition());
+                    .get(mOptionsWv3.getSelectedItemPosition()) : null;
         } else {
             return mOptionsWv3.getSelectedItemData();
         }
