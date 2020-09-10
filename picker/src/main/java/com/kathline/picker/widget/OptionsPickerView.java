@@ -232,7 +232,9 @@ public class OptionsPickerView<T> extends LinearLayout implements WheelView.OnIt
                 T opt2Data = mOptionsData2.get(opt1Pos).get(opt2Pos);
                 T opt3Data = null;
                 if (mOptionsData3 != null) {
-                    opt3Data = mOptionsData3.get(opt1Pos).get(opt2Pos).get(opt3Pos);
+                    if(mOptionsData3.get(opt1Pos).get(opt2Pos).size() > 0) {
+                        opt3Data = mOptionsData3.get(opt1Pos).get(opt2Pos).get(opt3Pos);
+                    }
                 }
                 mOnOptionsSelectedListener.onOptionsSelected(opt1Pos, opt1Data, opt2Pos, opt2Data, opt3Pos, opt3Data);
             }
